@@ -1,3 +1,9 @@
+#set the tag version 
+[MP3]
+version = 2
+
 [DIRS]
-dir1 = audio_lib
-dir2 = /music
+dir1 = audio_lib/
+dir 2 = /music
+[DATABASE]
+dir = songs.sql
