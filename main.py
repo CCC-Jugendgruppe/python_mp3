@@ -8,11 +8,14 @@ config = configparser.ConfigParser()
 config.read('config.ini')
 dirs = config.items("DIRS")
 
+if not dirs:
+    print("Plase specify at least one directory in the config.ini. ")
 
 connection = None
 db = Database(config["DATABASE"]["dir"])
 connection = db.create_connection()
-print(connection)
+db.init_database(connection)
+print(str(connection) + "\n")
 """
 Possible Tags:
 
@@ -45,7 +48,9 @@ for key, path in dirs:
                     print("no Metadata\n")
                 else:
                     print(tags["ID3TagV2"])
-                    print("\n")
+                    print("\n")                
+                    db.update_database(connection, tags["ID3TagV2"])
+
 
             else: 
                 print("Selected ID3TagV1")
@@ -54,6 +59,7 @@ for key, path in dirs:
                 else:
                     print(tags["ID3TagV1"])
                     print("\n")
+                    db.update_database(connection, tags["ID3TagV1"])
 
 #mp3 = MP3File("audio_lib/Kygo_&_Imagine_Dragons-Born_To_Be_Yours_(Lyric Video)-mOFvJVroAJE.mp3")
 # Get all tags.
