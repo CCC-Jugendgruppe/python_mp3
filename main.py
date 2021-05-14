@@ -15,6 +15,7 @@ db = Database(config["DATABASE"]["dir"])
 connection = db.create_connection()
 db.init_database(connection)
 print(str(connection) + "\n")
+
 """
 Possible Tags:
 
@@ -35,12 +36,7 @@ Possible Tags:
 for key, path in dirs: 
     for subdir, dirs, files in os.walk(path):
         for file in files:
-            #print(os.path.join(subdir, file))
             tags = MP3File(os.path.join(subdir, file)).get_tags()
-            #print(tags)
-            #for i in tags:
-                #print(i)
-                #print(tags[i])
             if int(config["MP3"]["version"]) == 2: 
                 print("Selected ID3TagV2")
                 if tags["ID3TagV2"] == {}:
@@ -49,8 +45,6 @@ for key, path in dirs:
                     print(tags["ID3TagV2"])
                     print("\n")                
                     db.update_database(connection, tags["ID3TagV2"])
-
-
             else: 
                 print("Selected ID3TagV1")
                 if tags["ID3TagV1"] == {}:
@@ -59,10 +53,5 @@ for key, path in dirs:
                     print(tags["ID3TagV1"])
                     print("\n")
                     db.update_database(connection, tags["ID3TagV1"])
-
-#mp3 = MP3File("audio_lib/Kygo_&_Imagine_Dragons-Born_To_Be_Yours_(Lyric Video)-mOFvJVroAJE.mp3")
-# Get all tags.
-#tags = mp3.get_tags()
-#print(tags)
 
 db.close_connection(connection)
