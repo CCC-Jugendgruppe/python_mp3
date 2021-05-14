@@ -1,4 +1,4 @@
-#set the tag version 
+#set the mp3tag version note V1 is not supported yet  
 [MP3]
 version = 2
 

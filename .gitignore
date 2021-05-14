@@ -1,3 +1,4 @@
 /audio_lib
-songs.db
-/__pycache__
+songs.*
+/__pycache__/
+.vscode

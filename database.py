@@ -40,11 +40,26 @@ class Database:
 
     def update_database(self, connection, data):
         sql = " INSERT INTO music (artist, band, album, title, track, genre, composer, copyright, comment, releaseyear, mp3_url) VALUES (?,?,?,?,?,?,?,?,?,?,?)"
-        print(sql)
         vallist = []
+        keys = ["artist", "band", "album", "song", "track", "genre", "composer", "copyright", "comment", "year", "url"]
+           
         for key, values in data.items():
             #sql+= str(values)
+            y = False
+            for i in range(len(keys)):
+                print(key)
+                print(keys[i])
+                if key == keys[i]:
+                    print("lol")
+                    y = True
+            print(y)
+            if not y: 
+                print("not y")
+                vallist.append(None)
+
+            #print("\n")
             vallist.append(values)
+        print("\n")
         print(vallist)
             
         #sql+=")"
