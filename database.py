@@ -1,5 +1,6 @@
 import sqlite3
 from sqlite3 import Error
+import traceback
 
 class Database:
     def __init__(self, db_file):
@@ -42,28 +43,17 @@ class Database:
         sql = " INSERT INTO music (artist, band, album, title, track, genre, composer, copyright, comment, releaseyear, mp3_url) VALUES (?,?,?,?,?,?,?,?,?,?,?)"
         vallist = []
         keys = ["artist", "band", "album", "song", "track", "genre", "composer", "copyright", "comment", "year", "url"]
-           
-        for key, values in data.items():
-            #sql+= str(values)
-            y = False
-            for i in range(len(keys)):
-                print(key)
-                print(keys[i])
-                if key == keys[i]:
-                    print("lol")
-                    y = True
-            print(y)
-            if not y: 
-                print("not y")
+        i = 0
+    
+        for i in range(len(keys)):        
+            try:
+                print(data[keys[i]])
+                vallist.append(data[keys[i]])
+            except KeyError as e:
+                print("novalue")
                 vallist.append(None)
 
-            #print("\n")
-            vallist.append(values)
         print("\n")
         print(vallist)
-            
-        #sql+=")"
-
-        #print(sql)
         connection.execute(sql, vallist)
         connection.commit()
