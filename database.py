@@ -27,13 +27,13 @@ class Database:
                (artist TEXT NULL, 
                 band TEXT NULL, 
                 album TEXT NULL, 
-                title TEXT NULL, 
-                track TEXT NULL, 
+                title TEXT NULL UNIQUE, 
+                track TEXT NULL UNIQUE, 
                 genre TEXT NULL, 
                 composer TEXT NULL, 
                 copyright TEXT NULL, 
                 comment TEXT NULL,
-                releaseyear REAL NULL,
+                releaseyear INT NULL,
                 mp3_url TEXT NULL
                 );''')
         connection.commit()
@@ -47,13 +47,16 @@ class Database:
     
         for i in range(len(keys)):        
             try:
-                print(data[keys[i]])
+                #print(data[keys[i]])
                 vallist.append(data[keys[i]])
-            except KeyError as e:
-                print("novalue")
+            except KeyError:
+                #print("novalue")
                 vallist.append(None)
 
-        print("\n")
-        print(vallist)
-        connection.execute(sql, vallist)
-        connection.commit()
+        #print("\n")
+        #print(vallist)
+        try: 
+            connection.execute(sql, vallist)
+            connection.commit()
+        except sqlite3.IntegrityError:
+            pass
