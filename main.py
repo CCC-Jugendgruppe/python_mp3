@@ -1,12 +1,19 @@
 import os
 import configparser
+import sys
 from mp3_tagger import MP3File, VERSION_1, VERSION_2, VERSION_BOTH
 from database import Database
 import re
 
 config = configparser.ConfigParser() 
-config.read('config.ini')
-dirs = config.items("DIRS")
+try:
+	config.read('config.ini')
+	dirs = config.items("DIRS")
+except:
+	sys.exit("no config provided")
+
+
+
 
 connection = None
 db = Database(config["DATABASE"]["dir"])
