@@ -7,3 +7,4 @@
 !install_requires
 !database.py
 !window.py
+!setup.py
