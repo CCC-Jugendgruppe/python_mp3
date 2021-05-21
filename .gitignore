@@ -1,4 +1,8 @@
-/audio_lib
-songs.*
-/__pycache__/
-.vscode
+# Ignore  every file
+*
+# whitelist project files
+!.config.ini.template
+!main.py
+!README.md
+!install_requires
+!database.py
