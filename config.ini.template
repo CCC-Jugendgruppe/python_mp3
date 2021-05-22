@@ -1,9 +1,12 @@
-#set the mp3tag version note V1 is not supported yet  
+# set the mp3tag version note V1 is not supported yet  
 [MP3]
 version = 2
 
+# Paths to Audio Libarys
 [DIRS]
 dir1 = audio_lib/
 dir 2 = /music
+
 [DATABASE]
+# Name of output file
 dir = songs.sql
