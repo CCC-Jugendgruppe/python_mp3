@@ -4,7 +4,7 @@ A simple Python script for reading metadata out of an mp3 file and storing it in
 1. Clone the repo to your mashine
 2. install needed system packages
 
-On Ubuntu
+On Ubuntu:
 
 ```sudo apt install python3-tk```
 
