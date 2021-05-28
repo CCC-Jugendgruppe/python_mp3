@@ -8,10 +8,13 @@ import re
 def songsupdate():
     config = configparser.ConfigParser() 
     try:
-        config.read('config.ini')
-        dirs = config.items("DIRS")
+      config.read('config.ini')
     except:
-        sys.exit("no config provided")
+      sys.exit("no config.ini found")
+    try:
+      dirs = config.items("DIRS")
+    except:
+        sys.exit("no or invalid [DIRS] section in config.ini")
 
 
 
