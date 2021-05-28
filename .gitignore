@@ -1,7 +1,6 @@
 # Ignore  every file
 *
 # whitelist project files
-!.config.ini.template
 !main.py
 !README.md
 !install_requires
@@ -10,5 +9,5 @@
 !setup.py
 !mp3_info.py
 !music_info.py
-!output/
-!music/
+!input/PUT_YOUR_MP3_FILES_HERE
+!output/THE_DATABASE_WILL_BE_PUT_HERE
