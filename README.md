@@ -16,4 +16,4 @@ Archlinux-Based systems:
 
 ```pip install ./```
 
-### 4. Copy config.ini.template to config.ini and edit configuration.
+### 4. Put your Files in the input folder or add your Audio Libarys to config.ini
