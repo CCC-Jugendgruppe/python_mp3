@@ -1,4 +1,0 @@
-install_requires=[
-   'sqlite3',
-   'configparser'
-]
