@@ -16,4 +16,4 @@ Archlinux-Based systems:
 
 ```pip install ./```
 
-### 4. Put your Files in the input folder or add your Audio Libarys to config.ini
+### 4. Put your Files in the input folder or add your audio libarys to config.ini
