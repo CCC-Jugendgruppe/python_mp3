@@ -14,7 +14,7 @@ def songsupdate():
     try:
       dirs = config.items("DIRS")
     except:
-        sys.exit("no or invalid [DIRS] section in config.ini")
+      sys.exit("no or invalid [DIRS] section in config.ini")
 
 
 
