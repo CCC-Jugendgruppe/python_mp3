@@ -1,5 +1,8 @@
 # Ignore  every file
 *
+input/*
+output/*
+
 # whitelist project files
 !main.py
 !README.md
@@ -9,5 +12,7 @@
 !setup.py
 !mp3_info.py
 !music_info.py
-!./input/PUT_YOUR_MP3_FILES_HERE
-!./output/THE_DATABASE_WILL_BE_PUT_HERE
+!input/
+!input/PUT_YOUR_MP3_FILES_HERE
+!output/
+!output/THE_DATABASE_WILL_BE_PUT_HERE
