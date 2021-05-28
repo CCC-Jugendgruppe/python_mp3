@@ -16,4 +16,4 @@ Archlinux-Based systems:
 
 ```pip install ./```
 
-### 4. Copy config.ini.template to config.ini and set right path.
+### 4. Copy config.ini.template to config.ini and edit configuration.
