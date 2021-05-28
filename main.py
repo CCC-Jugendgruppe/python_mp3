@@ -46,23 +46,23 @@ def songsupdate():
 		for subdir, dirs, files in os.walk(path):
 			for file in files:
 				if re.search("\.mp3$", file):
-						tags = MP3File(os.path.join(subdir, file)).get_tags()
-						if int(config["MP3"]["version"]) == 2: 
-							print("Selected ID3TagV2")
-							if tags["ID3TagV2"] == {}:
-								print("no Metadata\n")
-							else:
-								print(tags["ID3TagV2"])
-								print("\n")                
-								db.update_database(connection, tags["ID3TagV2"])
-						else: 
-							print("Selected ID3TagV1")
-							if tags["ID3TagV1"] == {}:
-								print("no Metadata\n")
-							else:
-								print(tags["ID3TagV1"])
-								print("\n")
-								db.update_database(connection, tags["ID3TagV1"])
+					tags = MP3File(os.path.join(subdir, file)).get_tags()
+					if int(config["MP3"]["version"]) == 2: 
+						print("Selected ID3TagV2")
+						if tags["ID3TagV2"] == {}:
+							print("no Metadata\n")
+						else:
+							print(tags["ID3TagV2"])
+							print("\n")                
+							db.update_database(connection, tags["ID3TagV2"])
+					else: 
+						print("Selected ID3TagV1")
+						if tags["ID3TagV1"] == {}:
+							print("no Metadata\n")
+						else:
+							print(tags["ID3TagV1"])
+							print("\n")
+							db.update_database(connection, tags["ID3TagV1"])
 
 	db.close_connection(connection)
 
