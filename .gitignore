@@ -10,3 +10,5 @@
 !setup.py
 !mp3_info.py
 !music_info.py
+!output/
+!music/
