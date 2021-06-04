@@ -10,7 +10,7 @@ output/*
 !database.py
 !window.py
 !setup.py
-!cory.py
+!core.py
 !mp3_info.py
 !music_info.py
 !input/
