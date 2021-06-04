@@ -30,6 +30,4 @@ class Window:
 	def run(self):
 		self.root.mainloop()
 
-windowinstance = Window()
-windowinstance.run()
 #songsupdate()

@@ -20,9 +20,8 @@ def songsupdate():
 
 	connection = None
 	db = Database(config["DATABASE"]["dir"])
-	connection = db.create_connection()
-	db.init_database(connection)
-	print(str(connection) + "\n")
+	db.init_database()
+	print(str(db.conn) + "\n")
 
 	"""
 	Possible Tags:
@@ -53,7 +52,7 @@ def songsupdate():
 						else:
 							print(tags["ID3TagV2"])
 							print("\n")                
-							db.update_database(connection, tags["ID3TagV2"])
+							db.update_database(tags["ID3TagV2"])
 					else: 
 						print("Selected ID3TagV1")
 						if tags["ID3TagV1"] == {}:
@@ -61,9 +60,9 @@ def songsupdate():
 						else:
 							print(tags["ID3TagV1"])
 							print("\n")
-							db.update_database(connection, tags["ID3TagV1"])
+							db.update_database(tags["ID3TagV1"])
 
-	db.close_connection(connection)
+	db.close_connection()
 
 
 if __name__ == "__main__":
