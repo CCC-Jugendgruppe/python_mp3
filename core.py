@@ -2,9 +2,8 @@ import os
 import configparser
 import sys
 
-
 from mp3_tagger import MP3File, VERSION_1, VERSION_2, VERSION_BOTH
-from database import Database
+from classes.database import Database
 import re
 
 def songsupdate():
