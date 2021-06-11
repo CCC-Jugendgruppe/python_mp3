@@ -6,7 +6,7 @@ import PyQt6.QtWidgets
 from classes.core import songsupdate
 # example for getting the current saved data in the database
 """
-test1 = Database("output/songs.sql")
+test1 = Database("songs.sql")
 test = test1.get_items()
 print(test)
 test1.close_connection()
