@@ -16,3 +16,4 @@ output/*
 !classes/database.py
 !classes/window.py
 !classes/core.py
+!classes/colorpalette.py
