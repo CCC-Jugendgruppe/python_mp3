@@ -64,6 +64,5 @@ def songsupdate():
 
 	db.close_connection()
 
-
 if __name__ == "__main__":
 	songsupdate()
