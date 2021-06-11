@@ -1,7 +1,7 @@
 # Links
 #   https://zetcode.com/pyqt6/
 
-import core as c
+import classes.core as c
 import sys
 import PyQt6.QtWidgets as qtw
 import PyQt6.QtGui as qtg
@@ -15,6 +15,10 @@ class Window(qtw.QWidget):
 		
 		# set global style 
 		self.setFont(qtg.QFont('SansSerif', 10))
+
+		# Songs Label
+		songslabel = qtw.QLabel('Songs', self)
+		songslabel.setFont('Ubuntu',15)
 
 		# button to refresh database
 		refreshbtn = qtw.QPushButton('Refresh', self)

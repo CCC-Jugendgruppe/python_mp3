@@ -1,9 +1,9 @@
 import argparse
-import window as w 
+import classes.window as w 
 from classes.database import Database
 from sys import exit
 import PyQt6.QtWidgets
-from core import songsupdate
+from classes.core import songsupdate
 # example for getting the current saved data in the database
 """
 test1 = Database("output/songs.sql")
