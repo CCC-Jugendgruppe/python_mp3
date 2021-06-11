@@ -29,7 +29,7 @@ class Database:
 				band TEXT NULL,
 				album TEXT NULL,
 				title TEXT NULL UNIQUE,
-				track TEXT NULL UNIQUE,
+				track TEXT NULL,
 				genre TEXT NULL,
 				composer TEXT NULL, 
 				copyright TEXT NULL, 
@@ -54,22 +54,24 @@ class Database:
 				#print("novalue")
 				vallist.append(None)
 
-		#print("\n")
-		#print(vallist)
+		print("\n")
+		print(vallist)
 		try: 
-			self.conn.execute(sql, vallist)
+			self.c.execute(sql, vallist)
 			self.conn.commit()
-		except sqlite3.IntegrityError:
+		except sqlite3.IntegrityError as e:
+			print("error when writing to the database")
+			print(e)
 			pass
 	
 	def get_items(self):
-		print(self.conn.execute('SELECT * FROM music;'))
+		print(self.c.execute('SELECT * FROM music;'))
 	
 		self.conn.commit()
 
-		rows = self.conn.fetchall()
+		rows = self.c.fetchall()
 		
-		#return rows #dict({"songname" : ["test", "test", "test", "test", "test","test"]})
+		return rows #dict({"songname" : ["test", "test", "test", "test", "test","test"]})
 
 
 #SELECT * FROM music;
