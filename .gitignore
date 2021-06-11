@@ -6,18 +6,15 @@ output/*
 # whitelist project files
 !main.py
 !README.md
-!install_requires
-!database.py
-!window.py
 !setup.py
-!core.py
-!mp3_info.py
-!music_info.py
+!planing/*
 !input/
 !input/PUT_YOUR_MP3_FILES_HERE
 !output/
-!planing/*
 !output/THE_DATABASE_WILL_BE_PUT_HERE
+!classes/
 !classes/__init__.py
 !classes/database.py
-!classes/
+!classes/database.py
+!classes/window.py
+!classes/core.py
