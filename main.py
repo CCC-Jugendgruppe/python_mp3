@@ -18,7 +18,6 @@ parser.add_argument('--gui', action='store_false', help='Open the Gui')
 args = parser.parse_args()
 print(args)
 if not args.gui:
-	app=w.main()
-	exit(app.exec())
+	w.main()
 else:
 	songsupdate()
