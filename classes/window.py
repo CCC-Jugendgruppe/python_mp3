@@ -18,7 +18,7 @@ class Window(qtw.QWidget):
 
 		# button to refresh database
 		refreshbtn = qtw.QPushButton('Refresh', self)
-		refreshbtn.setToolTip('Refreh the Database')
+		refreshbtn.setToolTip('Refresh the Database')
 		refreshbtn.clicked.connect(c.songsupdate)
 		refreshbtn.resize(refreshbtn.sizeHint())
 		refreshbtn.move(10, 10)
