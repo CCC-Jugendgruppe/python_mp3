@@ -32,26 +32,7 @@ class Window(qtw.QWidget):
 		refreshbtn.resize(refreshbtn.sizeHint())
 		refreshbtn.move(10, 40)
 
-		#TODO List with Songs
-		songsdb = db.Database("songs.sql")
-		songsdb.close_connection
-		songsdict = songsdb.get_items()
-		#print(songsdict)
-		#print(len(songsdict))
-
-		# List or table for songs?
-
-		#songstable = qtw.QTableWidget()
-		#songstable.rowCount(len(songsdict))
-		#songstable.data(songsdict)
-
-		#songslist = qtw.QListWidget()
-		#songslist.resize(270,290)
-		#songslist.move(10,5)
-		#songslist.addItem('Testtest')
-		#songslist.setWindowTitle('Songs')
-		#songslist.show()
-		#songslist.update
+		self.createSongstable
 
 		# Button to quit Programm 
 		quitbtn = qtw.QPushButton('Quit', self)
@@ -63,6 +44,35 @@ class Window(qtw.QWidget):
 		self.setGeometry(300, 300, 300, 450)
 		self.setWindowTitle('Tooltips')
 		self.show()
+
+	def createSongstable(self):
+		#TODO List with Songs
+		songsdb = db.Database("songs.sql")
+		songsdb.close_connection
+		songsdict = songsdb.get_items()
+		#print(songsdict)
+		#print(len(songsdict))
+
+		# List or table for songs?
+
+		#songstable = qtw.QTableWidget()
+		#songstable.setRowCount(len(songsdict))
+		#horHeaders = []
+		#for n, key in enumerate(sorted(songsdict)):
+		#	horHeaders.append(key)
+		#	for m, item in enumerate(songsdict):
+		#		newitem = qtw.QTableWidgetItem(item)
+		#		self.setItem(m, n, newitem)
+		#self.setHorizontalHeaderLabels(horHeaders)
+		#songstable.show()
+
+		#songslist = qtw.QListWidget()
+		#songslist.resize(270,290)
+		#songslist.move(10,5)
+		#songslist.addItem('Testtest')
+		#songslist.setWindowTitle('Songs')
+		#songslist.show()
+		#songslist.update
 	
 	def updatesongslist(self):
 		print('test')
