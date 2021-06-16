@@ -6,19 +6,10 @@ from mp3_tagger import MP3File, VERSION_1, VERSION_2, VERSION_BOTH
 from classes.database import Database
 import re
 
-def songsupdate():
-	config = configparser.ConfigParser() 
-	try:
-		config.read('config.ini')
-	except:
-		sys.exit("no config.ini found")
-	try:
-		dirs = config.items("DIRS")
-	except:
-		sys.exit("no or invalid [DIRS] section in config.ini")
-
+def songsupdate(songs_paths,songs_output,mp3_version):
+	
 	connection = None
-	db = Database(config["DATABASE"]["dir"])
+	db = Database(songs_paths)
 	db.init_database()
 	print(str(db.conn) + "\n")
 
@@ -39,12 +30,12 @@ def songsupdate():
 		- publisher (version 2.x).
 	"""
 
-	for key, path in dirs: 
-		for subdir, dirs, files in os.walk(path):
+	for key, path in songs_paths: 
+		for subdir, songs_paths, files in os.walk(path):
 			for file in files:
 				if re.search("\.mp3$", file):
 					tags = MP3File(os.path.join(subdir, file)).get_tags()
-					if int(config["MP3"]["version"]) == 2: 
+					if int(mp3_version) == 2: 
 						print("Selected ID3TagV2")
 						if tags["ID3TagV2"] == {}:
 							print("no Metadata\n")
@@ -64,4 +55,4 @@ def songsupdate():
 	db.close_connection()
 
 if __name__ == "__main__":
-	songsupdate()
+	print("Use main.py to use program")

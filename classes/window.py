@@ -3,12 +3,14 @@
 #
 # use 'python main.py --gui' to execute
 
-import classes.core as c
+from classes.core import songsupdate
 import classes.database as db
 from classes.colorpalette import colorpalette
 import sys
 import PyQt6.QtWidgets as qtw
 import PyQt6.QtGui as qtg
+
+tmp_db_path='~/.cache/python_mp3_tmp.db'
 
 class Window(qtw.QWidget):
 	def __init__(self):
@@ -28,11 +30,11 @@ class Window(qtw.QWidget):
 		# button to refresh database
 		refreshbtn = qtw.QPushButton('Refresh', self)
 		refreshbtn.setToolTip('Refresh the Database')
-		refreshbtn.clicked.connect(c.songsupdate)
+		refreshbtn.clicked.connect(songsupdate('./input',tmp_db_path,2)) #TODO: Read config from settings panel
 		refreshbtn.resize(refreshbtn.sizeHint())
 		refreshbtn.move(10, 40)
 
-		self.createSongstable
+		self.createSongstable()
 
 		# Button to quit Programm 
 		quitbtn = qtw.QPushButton('Quit', self)
@@ -47,7 +49,8 @@ class Window(qtw.QWidget):
 
 	def createSongstable(self):
 		#TODO List with Songs
-		songsdb = db.Database("songs.sql")
+		songsupdate('~/Music',tmp_db_path,2)
+		songsdb = db.Database(tmp_db_path)
 		songsdb.close_connection
 		songsdict = songsdb.get_items()
 		#print(songsdict)
