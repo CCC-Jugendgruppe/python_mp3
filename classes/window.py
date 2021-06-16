@@ -39,7 +39,7 @@ class Window(qtw.QWidget):
 		#print(songsdict)
 		#print(len(songsdict))
 
-		# List or table?
+		# List or table for songs?
 
 		#songstable = qtw.QTableWidget()
 		#songstable.rowCount(len(songsdict))
