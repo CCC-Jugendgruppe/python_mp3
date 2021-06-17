@@ -58,7 +58,6 @@ def songsupdate(input_paths:list, db_output, mp3_version):
 							print(tags["ID3TagV1"])
 							print("\n")
 							db.update_database(tags["ID3TagV1"])
-
 	db.close_connection()
 
 if __name__ == "__main__":

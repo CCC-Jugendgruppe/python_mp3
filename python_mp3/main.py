@@ -1,8 +1,6 @@
-import argparse
-import python_mp3.window as w 
-from python_mp3.database import Database
+from argparse import ArgumentParser
 from sys import exit
-import PyQt6.QtWidgets
+from python_mp3.window import createWindow 
 from python_mp3.core import songsupdate
 # example for getting the current saved data in the database
 """
@@ -13,17 +11,15 @@ test1.close_connection()
 """
 
 def main():
-	parser = argparse.ArgumentParser(description='Convert Songs into an Database')
+	parser = ArgumentParser(description='Convert Songs into an Database')
 	parser.add_argument('-g','--gui', action='store_true', help='Open GUI')
 	parser.add_argument('-i','--input', dest='input_path', nargs='+', help='Path to your Music Libary')
 	parser.add_argument('-o','--output', dest='output_path', default='./songs.sql', help='Set output path (Default: ./songs.sql)')
 	parser.add_argument('--mp3-version', dest='mp3_version', choices=['1','2'], default='2', help='Set mp3 version')
 
 	args = parser.parse_args()
-	#print(args)
-
 	if args.gui:
-		w.main()
+		createWindow()
 	elif args.input_path:
 		songsupdate(args.input_path,args.output_path,args.mp3_version)
 	else:
