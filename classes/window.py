@@ -7,10 +7,11 @@ from classes.core import songsupdate
 import classes.database as db
 from classes.colorpalette import colorpalette
 import sys
+import pathlib
 import PyQt6.QtWidgets as qtw
 import PyQt6.QtGui as qtg
 
-tmp_db_path='./tmp.sql'
+tmp_db_path=str(pathlib.Path.home())+'/.cache/python_mp3_tmp.sql'
 tmp_input_path=['./input/']
 
 class Window(qtw.QWidget):
