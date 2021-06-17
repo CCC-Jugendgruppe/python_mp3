@@ -10,7 +10,7 @@ import sys
 import PyQt6.QtWidgets as qtw
 import PyQt6.QtGui as qtg
 
-tmp_db_path='~/.cache/python_mp3_tmp.db'
+tmp_db_path='./tmp.db'
 
 class Window(qtw.QWidget):
 	def __init__(self):
@@ -18,7 +18,9 @@ class Window(qtw.QWidget):
 		self.initUI()
 
 	def initUI(self):
-		
+		self.setGeometry(300, 300, 300, 450)
+		self.setWindowTitle('Python mp3')
+
 		# set global style 
 		self.setFont(qtg.QFont('SansSerif', 10))
 
@@ -30,11 +32,12 @@ class Window(qtw.QWidget):
 		# button to refresh database
 		refreshbtn = qtw.QPushButton('Refresh', self)
 		refreshbtn.setToolTip('Refresh the Database')
-		refreshbtn.clicked.connect(songsupdate('./input',tmp_db_path,2)) #TODO: Read config from settings panel
+		refreshbtn.clicked.connect(self.refreshTmpDb()) 
+		#TODO: Read config from settings panel
 		refreshbtn.resize(refreshbtn.sizeHint())
 		refreshbtn.move(10, 40)
 
-		self.createSongstable()
+		self.createSongsTable()
 
 		# Button to quit Programm 
 		quitbtn = qtw.QPushButton('Quit', self)
@@ -43,20 +46,16 @@ class Window(qtw.QWidget):
 		quitbtn.setToolTip('Exit the Programm')
 		quitbtn.move(215, 420)
 
-		self.setGeometry(300, 300, 300, 450)
-		self.setWindowTitle('Tooltips')
 		self.show()
 
-	def createSongstable(self):
+	def createSongsTable(self):
 		#TODO List with Songs
-		songsupdate('~/Music',tmp_db_path,2)
+		self.refreshTmpDb()
 		songsdb = db.Database(tmp_db_path)
 		songsdb.close_connection
 		songsdict = songsdb.get_items()
 		#print(songsdict)
 		#print(len(songsdict))
-
-		# List or table for songs?
 
 		#songstable = qtw.QTableWidget()
 		#songstable.setRowCount(len(songsdict))
@@ -68,23 +67,14 @@ class Window(qtw.QWidget):
 		#		self.setItem(m, n, newitem)
 		#self.setHorizontalHeaderLabels(horHeaders)
 		#songstable.show()
-
-		#songslist = qtw.QListWidget()
-		#songslist.resize(270,290)
-		#songslist.move(10,5)
-		#songslist.addItem('Testtest')
-		#songslist.setWindowTitle('Songs')
-		#songslist.show()
-		#songslist.update
 	
-	def updatesongslist(self):
-		print('test')
+	def refreshTmpDb(self):
+		songsupdate('./input',tmp_db_path,2)
 
 def main():
-	
 	app = qtw.QApplication(sys.argv)
 	app.setStyle('Fusion')
-	#app.setPalette(colorpalette)
+	#app.setPalette(colorpalette())
 	win=Window()
 	sys.exit(app.exec())
 		
