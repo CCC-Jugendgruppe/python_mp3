@@ -10,7 +10,8 @@ import sys
 import PyQt6.QtWidgets as qtw
 import PyQt6.QtGui as qtg
 
-tmp_db_path='./tmp.db'
+tmp_db_path='./tmp.sql'
+tmp_input_path=['./input/']
 
 class Window(qtw.QWidget):
 	def __init__(self):
@@ -32,12 +33,12 @@ class Window(qtw.QWidget):
 		# button to refresh database
 		refreshbtn = qtw.QPushButton('Refresh', self)
 		refreshbtn.setToolTip('Refresh the Database')
-		refreshbtn.clicked.connect(self.refreshTmpDb()) 
+		refreshbtn.clicked.connect(self.refreshTmpDb)
 		#TODO: Read config from settings panel
 		refreshbtn.resize(refreshbtn.sizeHint())
 		refreshbtn.move(10, 40)
 
-		self.createSongsTable()
+		#self.createSongsTable()
 
 		# Button to quit Programm 
 		quitbtn = qtw.QPushButton('Quit', self)
@@ -52,7 +53,6 @@ class Window(qtw.QWidget):
 		#TODO List with Songs
 		self.refreshTmpDb()
 		songsdb = db.Database(tmp_db_path)
-		songsdb.close_connection
 		songsdict = songsdb.get_items()
 		#print(songsdict)
 		#print(len(songsdict))
@@ -69,7 +69,8 @@ class Window(qtw.QWidget):
 		#songstable.show()
 	
 	def refreshTmpDb(self):
-		songsupdate('./input',tmp_db_path,2)
+		print('Input:',tmp_input_path, 'Output:', tmp_db_path)
+		songsupdate(tmp_input_path,tmp_db_path,2)
 
 def main():
 	app = qtw.QApplication(sys.argv)

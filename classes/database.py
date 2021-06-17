@@ -19,26 +19,26 @@ class Database:
 			self.conn
 
 	def close_connection(self):
-			if self.conn != None:
-				self.conn.close()
-				print("close DB connection")
+		if self.conn != None:
+			self.conn.close()
+			print("close DB connection")
 
 	def init_database(self):
-			self.conn.execute('''CREATE TABLE IF NOT EXISTS music 
-				(artist TEXT NULL,
-				band TEXT NULL,
-				album TEXT NULL,
-				title TEXT NULL UNIQUE,
-				track TEXT NULL,
-				genre TEXT NULL,
-				composer TEXT NULL, 
-				copyright TEXT NULL, 
-				comment TEXT NULL,
-				releaseyear INT NULL,
-				mp3_url TEXT NULL
-				);''')
-			self.conn.commit()
-			print("Done")    
+		self.conn.execute('''CREATE TABLE IF NOT EXISTS music 
+			(artist TEXT NULL,
+			band TEXT NULL,
+			album TEXT NULL,
+			title TEXT NULL UNIQUE,
+			track TEXT NULL,
+			genre TEXT NULL,
+			composer TEXT NULL, 
+			copyright TEXT NULL, 
+			comment TEXT NULL,
+			releaseyear INT NULL,
+			mp3_url TEXT NULL
+			);''')
+		self.conn.commit()
+		print("Done")    
 
 	def update_database(self, data):
 		sql = " INSERT INTO music (artist, band, album, title, track, genre, composer, copyright, comment, releaseyear, mp3_url) VALUES (?,?,?,?,?,?,?,?,?,?,?)"
@@ -46,7 +46,7 @@ class Database:
 		keys = ["artist", "band", "album", "song", "track", "genre", "composer", "copyright", "comment", "year", "url"]
 		i = 0
 
-		for i in range(len(keys)):        
+		for i in range(len(keys)):
 			try:
 				#print(a[keys[i]])
 				vallist.append(data[keys[i]])

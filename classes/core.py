@@ -6,10 +6,17 @@ from mp3_tagger import MP3File, VERSION_1, VERSION_2, VERSION_BOTH
 from classes.database import Database
 import re
 
-def songsupdate(songs_paths,songs_output,mp3_version):
-	
+
+def songsupdate(input_paths:list, db_output, mp3_version):
+	# check if input_path is array
+	if not type(input_paths) is list: 
+		if type(input_paths) is str:
+			print('Converting string into list...')
+			input_paths=[input_paths]
+		else:
+			sys.exit('songsupdate: input_path has to be an Array')
 	connection = None
-	db = Database(songs_paths)
+	db = Database(db_output)
 	db.init_database()
 	print(str(db.conn) + "\n")
 
@@ -30,8 +37,8 @@ def songsupdate(songs_paths,songs_output,mp3_version):
 		- publisher (version 2.x).
 	"""
 
-	for key, path in songs_paths: 
-		for subdir, songs_paths, files in os.walk(path):
+	for path in input_paths: 
+		for subdir, input_paths, files in os.walk(path):
 			for file in files:
 				if re.search("\.mp3$", file):
 					tags = MP3File(os.path.join(subdir, file)).get_tags()
@@ -41,7 +48,7 @@ def songsupdate(songs_paths,songs_output,mp3_version):
 							print("no Metadata\n")
 						else:
 							print(tags["ID3TagV2"])
-							print("\n")                
+							print("\n")
 							db.update_database(tags["ID3TagV2"])
 					else: 
 						print("Selected ID3TagV1")
