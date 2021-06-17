@@ -12,8 +12,8 @@ Archlinux-Based systems:
 
 ```sudo pacman -S tk```
 
-### 3. install script with pip
+### 3. install Programm with pip
 
 ```pip install ./```
 
-### 4. Put your Files in the input folder or add your audio libarys to config.ini
+### FOR WORKING ON GUI: 4. Put your Files in the input folder
