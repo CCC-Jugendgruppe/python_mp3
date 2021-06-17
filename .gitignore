@@ -4,16 +4,17 @@ input/*
 output/*
 
 # whitelist project files
-!main.py
+!python_mp3/
+!python_mp3/main.py
 !README.md
 !setup.py
 !planing/*
 !input/
 !input/PUT_YOUR_MP3_FILES_HERE
 !classes/
-!classes/__init__.py
-!classes/database.py
-!classes/database.py
-!classes/window.py
-!classes/core.py
-!classes/colorpalette.py
+!python_mp3/classes/__init__.py
+!python_mp3/classes/database.py
+!python_mp3/classes/database.py
+!python_mp3/classes/window.py
+!python_mp3/classes/core.py
+!python_mp3/classes/colorpalette.py
