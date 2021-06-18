@@ -12,6 +12,7 @@ output/*
 !python_mp3/window.py
 !python_mp3/core.py
 !python_mp3/colorpalette.py
+!python_mp3/settingshandler.py
 !README.md
 !setup.py
 !planing/*
