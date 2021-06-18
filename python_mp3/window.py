@@ -40,7 +40,7 @@ class Window(qtw.QWidget):
 		mainsplitter.addWidget(self.settingsFrame())
 		mainlayout.addWidget(mainsplitter)
 		# Buttom
-		mainlayout.addLayout(self.BottomPanel())
+		mainlayout.addLayout(self.bottomPanel())
 
 		self.setLayout(mainlayout)
 		self.show()
@@ -81,7 +81,7 @@ class Window(qtw.QWidget):
 		frame.setFrameShape(qtw.QFrame.Shape.StyledPanel)
 		return frame
 
-	def BottomPanel(self):
+	def bottomPanel(self):
 		layout = self.setupLayout('h')
 		
 		# Button to reset settings
