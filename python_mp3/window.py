@@ -21,55 +21,16 @@ class Window(qtw.QWidget):
 		self.initUI()
 
 	def initUI(self):
+		# Global Settings
 		self.setGeometry(300, 300, 300, 450)
 		self.setWindowTitle('Python mp3')
-
-		mainlayout=qtw.QVBoxLayout()
-		
-		leftlayout=qtw.QVBoxLayout()
-		leftlayout.setContentsMargins(0,0,0,0)
-		leftlayout.setSpacing(0)
-		leftlayout.setEnabled(True)
-		
-		rightlayout=qtw.QVBoxLayout()
-		rightlayout.setContentsMargins(0,0,0,0)
-		rightlayout.setSpacing(0)
-		rightlayout.setEnabled(True)
-
-		# set global style 
 		self.setFont(qtg.QFont('SansSerif', 10))
-
-		# Songs Label
-		songslabel = qtw.QLabel('<b>Songs<\b>', self)
-		songslabel.setFont(qtg.QFont('Ubuntu', 15))
-		songslabel.move(10,10)
-		leftlayout.addWidget(songslabel)
-
-		# Button to refresh database
-		refreshbtn = qtw.QPushButton('Refresh', self)
-		refreshbtn.setToolTip('Refresh the Database')
-		refreshbtn.clicked.connect(self.refreshTmpDb)
-		#TODO: Read config from settings panel
-		refreshbtn.resize(refreshbtn.sizeHint())
-		#refreshbtn.move(10, 40)
-		leftlayout.addWidget(refreshbtn)
-
-		#self.createSongsTable()
-
-		testlabel=qtw.QLabel('test')
-		rightlayout.addWidget(testlabel)
-
-		leftframe=qtw.QFrame()
-		leftframe.setLayout(leftlayout)
-		leftframe.setFrameShape(qtw.QFrame.Shape.StyledPanel)
-
-		rightframe=qtw.QFrame()
-		rightframe.setLayout(rightlayout)
-		rightframe.setFrameShape(qtw.QFrame.Shape.StyledPanel)
+		
+		mainlayout=qtw.QVBoxLayout()		
 
 		mainsplitter=qtw.QSplitter(qtc.Qt.Orientation.Horizontal)
-		mainsplitter.addWidget(leftframe)
-		mainsplitter.addWidget(rightframe)
+		mainsplitter.addWidget(self.outputFrame())
+		mainsplitter.addWidget(self.settingsFrame())
 		
 		mainlayout.addWidget(mainsplitter)
 
@@ -78,11 +39,55 @@ class Window(qtw.QWidget):
 		quitbtn.clicked.connect(qtw.QApplication.instance().quit)
 		quitbtn.resize(quitbtn.sizeHint())
 		quitbtn.setToolTip('Exit the Programm')
-		#quitbtn.move(215, 420)
 		mainlayout.addWidget(quitbtn)
 
 		self.setLayout(mainlayout)
 		self.show()
+	
+	def outputFrame(self):
+		layout=qtw.QVBoxLayout()
+		layout.setContentsMargins(0,0,0,0)
+		layout.setSpacing(0)
+		layout.setEnabled(True)
+
+		# Songs Label
+		songslabel = qtw.QLabel('<b>Songs<\b>', self)
+		songslabel.setFont(qtg.QFont('Ubuntu', 15))
+		songslabel.move(10,10)
+		layout.addWidget(songslabel)
+
+		# Button to refresh database
+		refreshbtn = qtw.QPushButton('Refresh', self)
+		refreshbtn.setToolTip('Refresh the Database')
+		refreshbtn.clicked.connect(self.refreshTmpDb)
+		#TODO: Read config from settings panel
+		refreshbtn.resize(refreshbtn.sizeHint())
+		layout.addWidget(refreshbtn)
+
+		#songstable=self.createSongsTable()
+		#songstable.show()
+		#leftlayout.addWidget(songstable)
+
+		frame=qtw.QFrame()
+		frame.setLayout(layout)
+		frame.setFrameShape(qtw.QFrame.Shape.StyledPanel)
+
+		return frame
+
+	def settingsFrame(self):
+		layout=qtw.QVBoxLayout()
+		layout.setContentsMargins(0,0,0,0)
+		layout.setSpacing(0)
+		layout.setEnabled(True)
+
+		testlabel=qtw.QLabel('test')
+		layout.addWidget(testlabel)
+
+		frame=qtw.QFrame()
+		frame.setLayout(layout)
+		frame.setFrameShape(qtw.QFrame.Shape.StyledPanel)
+		
+		return frame
 
 	def createSongsTable(self):
 		#TODO List with Songs
@@ -101,7 +106,8 @@ class Window(qtw.QWidget):
 		#		newitem = qtw.QTableWidgetItem(item)
 		#		self.setItem(m, n, newitem)
 		#self.setHorizontalHeaderLabels(horHeaders)
-		#songstable.show()
+
+		#return songstable
 	
 	def refreshTmpDb(self):
 		#print('Input:',tmp_input_path, 'Output:', tmp_db_path)
