@@ -6,7 +6,7 @@
 from python_mp3.core import songsupdate
 from python_mp3.database import Database
 from python_mp3.colorpalette import colorpalette
-import sys
+import sys, os, json
 import pathlib
 import PyQt6.QtCore as qtc
 import PyQt6.QtWidgets as qtw
@@ -14,11 +14,13 @@ import PyQt6.QtGui as qtg
 
 tmp_db_path=str(pathlib.Path.home())+'/.cache/python_mp3_tmp.sql'
 tmp_input_path=['./input/']
+config_path='./python_mp3.conf'
 
 class Window(qtw.QWidget):
 	def __init__(self):
 		super().__init__()
 		self.initUI()
+		self.settings={}
 
 	def initUI(self):
 		# Global Settings
@@ -26,6 +28,10 @@ class Window(qtw.QWidget):
 		self.setWindowTitle('Python mp3')
 		self.setFont(qtg.QFont('SansSerif', 10))
 		
+		self.resetSettings
+		#self.loadSettings()
+		print(self.settings)
+
 		# General Layout
 		mainlayout = qtw.QVBoxLayout()
 		# Splitter between Output and Settings
@@ -41,10 +47,7 @@ class Window(qtw.QWidget):
 	
 	def outputFrame(self):
 		# General Layout Settings
-		layout=qtw.QVBoxLayout()
-		layout.setContentsMargins(0,0,0,0)
-		layout.setSpacing(0)
-		layout.setEnabled(True)
+		layout=self.setupLayout('v')
 
 		# Songs Label
 		songslabel = self.titlelabel('Songs')
@@ -69,8 +72,6 @@ class Window(qtw.QWidget):
 
 	def settingsFrame(self):
 		layout = self.setupLayout('v')
-
-		self.resetSettings()
 
 		settingslabel = self.titlelabel('Settings')
 		layout.addWidget(settingslabel)
@@ -136,11 +137,11 @@ class Window(qtw.QWidget):
 		return layout
 
 	def titlelabel(self,name):
-		label = qtw.QLabel('<b>'+name+'<\b>', self)
+		label = qtw.QLabel('<b>'+name+'<\b>', self)	
 		label.setFont(qtg.QFont('Ubuntu', 15))
 		return label
 
-	def refreshTmpDb(self):
+	def refreshTmpDb(self):	
 		#print('Input:',tmp_input_path, 'Output:', tmp_db_path)
 		songsupdate(tmp_input_path,tmp_db_path,2)
 
@@ -151,10 +152,23 @@ class Window(qtw.QWidget):
 			'mp3_version':2
 		}
 
+	def saveSettings(self):
+		print('Saving settings...')
+		with open(config_path, 'w', encoding='utf8') as f:
+			f.write(json.dumps(self.settings,indent=2,ensure_ascii=False))
+	
+	def loadSettings(self):
+		print('Loading settings...')
+		if os.path.isfile(config_path):
+			with open(config_path, 'r', encoding='utf8') as f:
+				self.settings=json.load(f)
+		else:
+			self.resetSettings()
 
 def createWindow():
 	app = qtw.QApplication(sys.argv)
 	app.setStyle('Fusion')
 	#app.setPalette(colorpalette())
 	win=Window()
+	win.saveSettings()
 	sys.exit(app.exec())

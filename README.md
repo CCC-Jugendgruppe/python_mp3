@@ -14,6 +14,6 @@ Archlinux-Based systems:
 
 ### 3. install Programm with pip
 
-```pip install ./```
+```pip3 install .```
 
 ### FOR WORKING ON GUI: 4. Put your Files in the input folder
