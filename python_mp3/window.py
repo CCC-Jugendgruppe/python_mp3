@@ -12,7 +12,9 @@ import PyQt6.QtCore as qtc
 import PyQt6.QtWidgets as qtw
 import PyQt6.QtGui as qtg
 
+# Set path for temporary database to .cache 
 tmp_db_path=str(pathlib.Path.home())+'/.cache/python_mp3_tmp.sql'
+# 
 tmp_input_path=['./input/']
 config_path='./python_mp3.conf'
 
@@ -20,11 +22,11 @@ class Window(qtw.QWidget):
 	def __init__(self):
 		super().__init__()
 		self.initUI()
-		self.settings={}
 
+	settings={}
 	def initUI(self):
 		# Global Settings
-		self.setGeometry(300, 300, 300, 450)
+		self.setGeometry(0, 0, 650, 500)
 		self.setWindowTitle('Python mp3')
 		self.setFont(qtg.QFont('SansSerif', 10))
 		
@@ -50,7 +52,7 @@ class Window(qtw.QWidget):
 		layout=self.setupLayout('v')
 
 		# Songs Label
-		songslabel = self.titlelabel('Songs')
+		songslabel = self.titleLabel('Songs')
 		layout.addWidget(songslabel)
 
 		# Button to Refresh Database
@@ -65,20 +67,16 @@ class Window(qtw.QWidget):
 		#songstable.show()
 		#leftlayout.addWidget(songstable)
 
-		frame=qtw.QFrame()
-		frame.setLayout(layout)
-		frame.setFrameShape(qtw.QFrame.Shape.StyledPanel)
+		frame = self.setupFrame(layout)
 		return frame
 
 	def settingsFrame(self):
 		layout = self.setupLayout('v')
 
-		settingslabel = self.titlelabel('Settings')
+		settingslabel = self.titleLabel('Settings')
 		layout.addWidget(settingslabel)
 
-		frame = qtw.QFrame()
-		frame.setLayout(layout)
-		frame.setFrameShape(qtw.QFrame.Shape.StyledPanel)
+		frame = self.setupFrame(layout)
 		return frame
 
 	def bottomPanel(self):
@@ -97,7 +95,7 @@ class Window(qtw.QWidget):
 
 		# Button to Quit Programm
 		quitbtn = qtw.QPushButton('Quit')
-		quitbtn.clicked.connect(qtw.QApplication.instance().quit)
+		quitbtn.clicked.connect(self.quit)
 		quitbtn.resize(quitbtn.sizeHint())
 		quitbtn.setToolTip('Exit the Programm')
 		layout.addWidget(quitbtn)
@@ -136,7 +134,13 @@ class Window(qtw.QWidget):
 		layout.setEnabled(True)
 		return layout
 
-	def titlelabel(self,name):
+	def setupFrame(self,layout):
+		frame = qtw.QFrame()
+		frame.setLayout(layout)
+		frame.setFrameShape(qtw.QFrame.Shape.StyledPanel)
+		return frame
+
+	def titleLabel(self,name):
 		label = qtw.QLabel('<b>'+name+'<\b>', self)	
 		label.setFont(qtg.QFont('Ubuntu', 15))
 		return label
@@ -145,15 +149,20 @@ class Window(qtw.QWidget):
 		#print('Input:',tmp_input_path, 'Output:', tmp_db_path)
 		songsupdate(tmp_input_path,tmp_db_path,2)
 
+	def quit(self):
+		self.saveSettings()
+		qtw.QApplication.instance().quit()
+
 	def resetSettings(self):
 		print('Resetting Configuration')
 		self.settings={
 			'paths':[],
 			'mp3_version':2
 		}
+		print(self.settings)
 
 	def saveSettings(self):
-		print('Saving settings...')
+		print('Saving settings... '+ str(self.settings))
 		with open(config_path, 'w', encoding='utf8') as f:
 			f.write(json.dumps(self.settings,indent=2,ensure_ascii=False))
 	
@@ -164,11 +173,12 @@ class Window(qtw.QWidget):
 				self.settings=json.load(f)
 		else:
 			self.resetSettings()
+		print('Loaded settings... '+str(self.settings))
 
 def createWindow():
 	app = qtw.QApplication(sys.argv)
 	app.setStyle('Fusion')
 	#app.setPalette(colorpalette())
 	win=Window()
-	win.saveSettings()
+	#win.saveSettings()
 	sys.exit(app.exec())
