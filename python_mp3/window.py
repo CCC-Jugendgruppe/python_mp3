@@ -12,7 +12,7 @@ import PyQt6.QtCore as qtc
 import PyQt6.QtWidgets as qtw
 import PyQt6.QtGui as qtg
 
-# Set path for temporary database to .cache 
+# Set path for temporary database to cache 
 tmp_db_path=str(pathlib.Path.home())+'/.cache/python_mp3_tmp.sql'
 # 
 tmp_input_path=['./input/']
