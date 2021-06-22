@@ -42,7 +42,7 @@ jobs:
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: python_mp3.zip
+          name: python_mp3-linux.zip
           path: |
               ${{ matrix.python_main_file }}.bin
               main.build
