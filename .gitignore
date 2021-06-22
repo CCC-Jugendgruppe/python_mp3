@@ -18,4 +18,4 @@ output/*
 !input/
 !input/PUT_YOUR_MP3_FILES_HERE
 !classes/
-!.github/compiling_linux.yml
+!.github/workflows/compiling_linux.yml
