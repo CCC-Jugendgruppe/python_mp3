@@ -45,4 +45,3 @@ jobs:
           name: python_mp3-linux.zip
           path: |
               ${{ matrix.python_main_file }}.bin
-              main.build
