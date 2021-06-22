@@ -25,16 +25,17 @@ config_path = './python_mp3.conf'
 class Window(qtw.QWidget):
     def __init__(self):
         super().__init__()
-        self.initUI()
+        self.initui()
 
     settings = {}
 
-    def initUI(self):
+    def initui(self):
         # Global Settings
         self.setGeometry(0, 0, 650, 500)
         self.setWindowTitle('Python mp3')
         self.setFont(qtg.QFont('SansSerif', 10))
 
+        # no function call executed
         self.resetSettings
         # self.loadSettings()
         print(self.settings)
@@ -46,7 +47,7 @@ class Window(qtw.QWidget):
         mainsplitter.addWidget(self.outputFrame())
         mainsplitter.addWidget(self.settingsFrame())
         mainlayout.addWidget(mainsplitter)
-        # Buttom
+        # Bottom
         mainlayout.addLayout(self.bottomPanel())
 
         self.setLayout(mainlayout)
@@ -67,7 +68,6 @@ class Window(qtw.QWidget):
         # TODO: Read config from settings panel
         refreshbtn.resize(refreshbtn.sizeHint())
         layout.addWidget(refreshbtn)
-
         self.createSongsTable()
         # songstable = self.createSongsTable()
         # songstable.show()
@@ -109,6 +109,8 @@ class Window(qtw.QWidget):
         return layout
 
     def createSongsTable(self):
+        print("test")
+
         # TODO List with Songs
         self.refreshTmpDb()
         songsdb = Database(tmp_db_path)
@@ -130,9 +132,9 @@ class Window(qtw.QWidget):
     # return songstable
 
     def setupLayout(self, orientation):
-        if orientation is 'v':
+        if orientation == 'v':
             layout = qtw.QVBoxLayout()
-        elif orientation is 'h':
+        elif orientation == 'h':
             layout = qtw.QHBoxLayout()
         else:
             sys.exit('setupLayout: orientation must be \'v\' or \'h\'')
