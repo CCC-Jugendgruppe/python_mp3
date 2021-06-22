@@ -16,6 +16,8 @@ jobs:
       matrix:
         python_version:
             - '3.9'
+        python_main_file:
+            - 'main.py'
     name: Ubuntu Python ${{ matrix.python_version }}
     steps:
       - uses: actions/checkout@v2
@@ -36,5 +38,11 @@ jobs:
       - name: Compile the source code with nuitka
         run: |
           cd python_mp3
-          python -m nuitka --gdb main.py  --follow-imports
+          python -m nuitka --gdb ${{ matrix.python_main_file }}  --follow-imports
+
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist-without-markdown
+          path: python_mp3/${{ matrix.python_main_file }}
 
