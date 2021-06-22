@@ -1,7 +1,8 @@
 from argparse import ArgumentParser
 from sys import exit
-from python_mp3.window import createWindow 
-from python_mp3.core import songsupdate
+from window import createWindow
+from core import songsupdate
+import datetime
 # example for getting the current saved data in the database
 """
 test1 = Database("songs.sql")
@@ -21,7 +22,10 @@ def main():
 	if args.gui:
 		createWindow()
 	elif args.input_path:
+		start_time = datetime.datetime.now()
 		songsupdate(args.input_path,args.output_path,args.mp3_version)
+		end_time = datetime.datetime.now()
+		print(end_time - start_time)
 	else:
 		parser.print_help()
 

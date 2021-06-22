@@ -3,9 +3,9 @@
 #
 # use 'python main.py --gui' to execute
 
-from python_mp3.core import songsupdate
-from python_mp3.database import Database
-from python_mp3.colorpalette import colorpalette
+from core import songsupdate
+from database import Database
+from colorpalette import colorpalette
 import sys, os, json
 import pathlib
 import PyQt6.QtCore as qtc
@@ -106,8 +106,8 @@ class Window(qtw.QWidget):
 		#TODO List with Songs
 		self.refreshTmpDb()
 		songsdb = Database(tmp_db_path)
-		songsdict = songsdb.get_items()
-		#print(songsdict)
+		songsdict = songsdb
+		print(songsdict)
 		#print(len(songsdict))
 
 		#songstable = qtw.QTableWidget()

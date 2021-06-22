@@ -3,7 +3,7 @@ import configparser
 import sys
 
 from mp3_tagger import MP3File, VERSION_1, VERSION_2, VERSION_BOTH
-from python_mp3.database import Database
+from database import Database
 import re
 
 
