@@ -17,7 +17,8 @@ from database import Database
 
 # Set path for temporary database to cache 
 tmp_db_path = str(pathlib.Path.home()) + '/.cache/python_mp3_tmp.sql'
-# 
+#
+#please read in the path from the config
 tmp_input_path = ['./input/']
 config_path = './python_mp3.conf'
 
@@ -36,7 +37,7 @@ class Window(qtw.QWidget):
         self.setFont(qtg.QFont('SansSerif', 10))
 
         # no function call executed
-        self.resetSettings
+        #self.resetSettings
         # self.loadSettings()
         print(self.settings)
 
@@ -109,13 +110,12 @@ class Window(qtw.QWidget):
         return layout
 
     def createSongsTable(self):
-        print("test")
 
         # TODO List with Songs
         self.refreshTmpDb()
         songsdb = Database(tmp_db_path)
-        songsdict = songsdb
-        print(songsdict)
+        songsdict = songsdb.get_items()
+        print("test " + str(songsdict))
 
     # print(len(songsdict))
 

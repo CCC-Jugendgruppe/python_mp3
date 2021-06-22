@@ -37,6 +37,7 @@ def songsupdate(input_paths: list, db_output, mp3_version):
 	"""
 
     for path in input_paths:
+        print(input_paths)
         for subdir, input_paths, files in os.walk(path):
             for file in files:
                 if re.search("\.mp3$", file):

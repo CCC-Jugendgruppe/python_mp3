@@ -22,10 +22,7 @@ def main():
 	if args.gui:
 		createWindow()
 	elif args.input_path:
-		start_time = datetime.datetime.now()
 		songsupdate(args.input_path,args.output_path,args.mp3_version)
-		end_time = datetime.datetime.now()
-		print(end_time - start_time)
 	else:
 		parser.print_help()
 
