@@ -29,13 +29,12 @@ jobs:
 
       - name: Install Nuitka and dependencies
         run: |
-          ls -al
-
           sudo apt-get update
           sudo apt-get install chrpath gdb ccache libfuse2
           python -m pip install nuitka
 
       - name: Compile the source code with nuitka
         run: |
-          python -m nuitka --gdb /python_mp3/main.py  --follow-imports
+          cd python_mp3
+          python -m nuitka --gdb main.py  --follow-imports
 
