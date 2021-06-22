@@ -35,5 +35,5 @@ jobs:
 
       - name: Compile the source code with nuitka
         run: |
-          python -m nuitka --gdb main.py  --follow-imports
+          python -m nuitka --gdb /python_mp3/main.py  --follow-imports
 
