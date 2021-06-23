@@ -34,7 +34,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install chrpath gdb ccache libfuse2
           python -m pip install nuitka
-          python -m pip install -e  . -use-feature=in-tree-build
+          python -m pip install -e  .
 
 
       - name: Compile the source code with nuitka
