@@ -116,7 +116,7 @@ class Window(qtw.QWidget):
         self.refreshTmpDb()
         songsdb = Database(tmp_db_path)
         songsdict = songsdb.get_items() # I am not sure what type of variable needed for Qtablewidget
-        print("test " + str(songsdict))
+        print("songresult " + str(songsdict))
 
     # print(len(songsdict))
 
