@@ -115,7 +115,7 @@ class Window(qtw.QWidget):
         # TODO List with Songs
         self.refreshTmpDb()
         songsdb = Database(tmp_db_path)
-        songsdict = songsdb.get_items() # I am not sure what type of variable needed for Qtablewidget
+        songsdict = songsdb.get_items()  # I am not sure what type of variable needed for Qtablewidget
         print("songresult " + str(songsdict))
 
     # print(len(songsdict))
