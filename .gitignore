@@ -1,21 +1,11 @@
 # Ignore  every file
 *
-input/*
-output/*
 
 # whitelisting project files
-!python_mp3/
-!python_mp3/main.py
-!python_mp3/__init__.py
-!python_mp3/database.py
-!python_mp3/database.py
-!python_mp3/window.py
-!python_mp3/core.py
-!python_mp3/colorpalette.py
+!python_mp3/*.py
 !README.md
 !setup.py
 !planing/*
-!input/
+# Will be removed when proper implementation of Settings
 !input/PUT_YOUR_MP3_FILES_HERE
-!classes/
 !.github/

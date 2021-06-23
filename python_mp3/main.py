@@ -1,7 +1,7 @@
 from argparse import ArgumentParser
 from sys import exit
-from window import createWindow
-from core import songsupdate
+from python_mp3.window import createWindow
+from python_mp3.core import songsupdate
 import datetime
 # example for getting the current saved data in the database
 """

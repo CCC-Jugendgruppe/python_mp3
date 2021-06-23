@@ -12,15 +12,16 @@ import PyQt6.QtCore as qtc
 import PyQt6.QtGui as qtg
 import PyQt6.QtWidgets as qtw
 
-from core import songsupdate
-from database import Database
+# python_mp3.<file> needed for proper pip implementation
+from python_mp3.core import songsupdate
+from python_mp3.database import Database
 
 # Set path for temporary database to cache 
 tmp_db_path = str(pathlib.Path.home()) + '/.cache/python_mp3_tmp.sql'
 #
 #please read in the path from the config
-tmp_input_path = ['./input/']
-config_path = './python_mp3.conf'
+tmp_input_path = ['./input/'] # Temporary solution until proper implementation of config file
+config_path = './python_mp3.conf' # TODO Put into config path when done with implementation
 
 
 class Window(qtw.QWidget):
@@ -37,7 +38,7 @@ class Window(qtw.QWidget):
         self.setFont(qtg.QFont('SansSerif', 10))
 
         # no function call executed
-        #self.resetSettings
+        self.resetSettings()
         # self.loadSettings()
         print(self.settings)
 
@@ -114,7 +115,7 @@ class Window(qtw.QWidget):
         # TODO List with Songs
         self.refreshTmpDb()
         songsdb = Database(tmp_db_path)
-        songsdict = songsdb.get_items()
+        songsdict = songsdb.get_items() # I am not what type of variable needed for Qtablewidget
         print("test " + str(songsdict))
 
     # print(len(songsdict))
