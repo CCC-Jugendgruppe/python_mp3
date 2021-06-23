@@ -37,7 +37,7 @@ jobs:
 
       - name: Compile the source code with nuitka
         run: |
-            python -m nuitka --gdb python_mp3/${{ matrix.python_main_file }}.py  --follow-imports
+            #FIXME: Fix: python -m pip install <Project root path> && python_mp3/${{ matrix.python_main_file }}.py  --follow-imports
 
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
