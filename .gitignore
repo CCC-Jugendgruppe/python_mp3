@@ -4,6 +4,7 @@
 # whitelisting project files
 !python_mp3/*.py
 !README.md
+!python_mp3/config.py
 !setup.py
 !planing/*
 # Will be removed when proper implementation of Settings
