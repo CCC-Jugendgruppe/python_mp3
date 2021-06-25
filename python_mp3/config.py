@@ -20,7 +20,10 @@ class Config:
         print("update")
 
     def clear(self):
-        print("clear")
+        if os.path.exists(str(self.filename)):
+            os.remove(str(self.filename))
+        else:
+            print("The file does not exist")
 
 
 test = Config("/config.json")
