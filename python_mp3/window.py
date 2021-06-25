@@ -40,7 +40,7 @@ class Window(qtw.QWidget):
 
 		settings = {}
 
-		def initui(self):
+  def initui(self):
 				# Global Settings
 				self.setGeometry(0, 0, 650, 500)
 				self.setWindowTitle('Python mp3')
@@ -55,7 +55,7 @@ class Window(qtw.QWidget):
 				mainlayout = qtw.QVBoxLayout()
 				# Splitter between Output and Settings
 				mainsplitter = qtw.QSplitter(qtc.Qt.Orientation.Horizontal)
-				mainsplitter.addWidget(self.outputFrame())
+        mainsplitter.addWidget(self.outputFrame())
 				mainsplitter.addWidget(self.settingsFrame())
 				mainlayout.addWidget(mainsplitter)
 				# Bottom
@@ -209,7 +209,7 @@ class Window(qtw.QWidget):
 				else:
 						self.resetSettings()
 				print('Loaded settings... ' + str(self.settings))
-
+        
 
 def createWindow():
 		app = qtw.QApplication(sys.argv)
