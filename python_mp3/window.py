@@ -40,7 +40,7 @@ class Window(qtw.QWidget):
 
 	settings = {}
 
-  def initui(self):
+	def initui(self):
 		# Global Settings
 		self.setGeometry(0, 0, 650, 500)
 		self.setWindowTitle('Python mp3')
@@ -54,7 +54,7 @@ class Window(qtw.QWidget):
 		mainlayout = qtw.QVBoxLayout()
 		# Splitter between Output and Settings
 		mainsplitter = qtw.QSplitter(qtc.Qt.Orientation.Horizontal)
-    mainsplitter.addWidget(self.outputFrame())
+		mainsplitter.addWidget(self.outputFrame())
 		mainsplitter.addWidget(self.settingsFrame())
 		mainlayout.addWidget(mainsplitter)
 		# Bottom
@@ -76,7 +76,7 @@ class Window(qtw.QWidget):
 		refreshbtn.setToolTip('Refresh the Database')
 		#refreshbtn_refreshTmpDb = self.refreshDb(tmp_db_path)
 		print(tmp_db_path)
-		refreshbtn.clicked.connect(self.refreshDb(tmp_db_path))
+		refreshbtn.clicked.connect(self.refreshTmpDb)
 		# TODO: Read config from settings panel
 		refreshbtn.resize(refreshbtn.sizeHint())
 		layout.addWidget(refreshbtn)
@@ -114,7 +114,7 @@ class Window(qtw.QWidget):
 		# Button to export Database
 		exportbtn = qtw.QPushButton('Export')
 		# TODO: export function
-		exportbtn.clicked.connect(self.exportTmpDb)
+		exportbtn.clicked.connect(self.exportDb)
 		layout.addWidget(exportbtn)
 
 		# Button to Quit Programm
@@ -181,6 +181,9 @@ class Window(qtw.QWidget):
 		# print('Input:',tmp_input_path, 'Output:', tmp_db_path)
 		# FIXME Read input paths from setings
 		songsupdate(self.settings.get('paths'),path, 2)
+	
+	def refreshTmpDb(self):
+		self.refreshDb(self.refreshDb(tmp_db_path))
 
 	def quit(self):
 		self.saveSettings()
@@ -208,7 +211,7 @@ class Window(qtw.QWidget):
 		else:
 				self.resetSettings()
 		print('Loaded settings... ' + str(self.settings))
-        
+				
 
 def createWindow():
 	app = qtw.QApplication(sys.argv)
