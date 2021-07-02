@@ -75,5 +75,12 @@ class Database:
 		
 		return rows #dict({"songname" : ["test", "test", "test", "test", "test","test"]})
 
-
+"""
+test = Database("../songs.sql")
+test2 = test.get_items()
+for i in test2:
+	print("\nnewsong\n")
+	for y in i:
+		print(y)
+"""
 #SELECT * FROM music;
