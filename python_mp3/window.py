@@ -31,16 +31,14 @@ from python_mp3.config import Config
 tmp_db_path = str(pathlib.Path.home()) + '/.cache/python_mp3_tmp.sql'
 #please read in the path from the config
 tmp_input_path = ['./input/'] # Temporary solution until proper implementation of config file
-config_path = './python_mp3.conf' # TODO Put into config path when done with implementation
-
+config_path = './python_mp3.conf' # TODO Put into system config path when done with implementation
+config = Config(config_path)
+settings = config.readfile()
 
 class Window(qtw.QWidget):
 	def __init__(self):
 		super().__init__()
 		self.initui()
-		self.config = Config(config_path)
-
-	settings = {}
 
 	def initui(self):
 		# Global Settings
@@ -48,9 +46,8 @@ class Window(qtw.QWidget):
 		self.setWindowTitle('Python mp3')
 		self.setFont(qtg.QFont('SansSerif', 10))
 
-		self.config.readfile()
 		# self.loadSettings()
-		print(self.settings)
+		print(settings)
 
 		# General Layout
 		mainlayout = qtw.QVBoxLayout()
@@ -86,7 +83,7 @@ class Window(qtw.QWidget):
 		self.createSongsTable()
 		songstable = self.createSongsTable()
 		songstable.show()
-		leftlayout.addWidget(songstable)
+		layout.addWidget(songstable)
 
 		frame = self.setupFrame(layout)
 		return frame
@@ -146,7 +143,7 @@ class Window(qtw.QWidget):
 		#			newitem = qtw.QTableWidgetItem(item)
 		#			self.setItem(m, n, newitem)
 		# 	self.setHorizontalHeaderLabels(horHeaders)
-		# return songstable
+		return songstable
 
 	def setupLayout(self, orientation):
 		if orientation == 'v':
@@ -183,7 +180,7 @@ class Window(qtw.QWidget):
 	def refreshDb(self,path):
 		# print('Input:',tmp_input_path, 'Output:', tmp_db_path)
 		# FIXME Read input paths from setings
-		songsupdate(self.settings.get('paths'),path, 2)
+		songsupdate(settings.get('paths'),path, 2)
 	
 	def refreshTmpDb(self):
 		self.refreshDb(self.refreshDb(tmp_db_path))
@@ -200,5 +197,4 @@ def createWindow():
 	# TODO: Make color pallete
 	# app.setPalette(colorpalette())
 	win = Window()
-	# win.saveSettings()
 	sys.exit(app.exec())
