@@ -2,10 +2,15 @@
 *
 
 # whitelisting project files
-!python_mp3/*.py
+!python_mp3/config.py
+!python_mp3/window.py
+!python_mp3/core.py
+!python_mp3/database.py
+!python_mp3/log.py
+!python_mp3/__init__.py
 !README.md
 !LICENSE
-!python_mp3/config.py
+
 !setup.py
 !planing/*
 # Will be removed when proper implementation of Settings
