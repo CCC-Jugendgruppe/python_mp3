@@ -50,14 +50,15 @@ def songsupdate(input_paths: list, db_output, mp3_version):
 							print(tags["ID3TagV2"])
 							print("\n")
 							db.update_database(tags["ID3TagV2"])
+						# FIXME Invalid syntax
+					else:
+						print("Selected ID3TagV1")
+						if tags["ID3TagV1"] == {}:
+								print("no Metadata\n")
 						else:
-							print("Selected ID3TagV1")
-							if tags["ID3TagV1"] == {}:
-									print("no Metadata\n")
-							else:
-								print(tags["ID3TagV1"])
-								print("\n")
-								db.update_database(tags["ID3TagV1"])
+							print(tags["ID3TagV1"])
+							print("\n")
+							db.update_database(tags["ID3TagV1"])
 	db.close_connection()
 
 

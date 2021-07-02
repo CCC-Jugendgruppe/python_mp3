@@ -25,9 +25,9 @@ import PyQt6.QtWidgets as qtw
 from python_mp3.core import songsupdate
 from python_mp3.database import Database
 
+# TODO get system cache and config path
 # Set path for temporary database to cache 
 tmp_db_path = str(pathlib.Path.home()) + '/.cache/python_mp3_tmp.sql'
-#
 #please read in the path from the config
 tmp_input_path = ['./input/'] # Temporary solution until proper implementation of config file
 config_path = './python_mp3.conf' # TODO Put into config path when done with implementation
@@ -128,7 +128,7 @@ class Window(qtw.QWidget):
 
 	def createSongsTable(self):
 
-		# TODO List with Songs
+		# TODO Table with Songs
 		self.refreshTmpDb()
 		songsdb = Database(tmp_db_path)
 		songsdict = songsdb.get_items() # I am not sure what type of variable needed for Qtablewidget
@@ -172,8 +172,11 @@ class Window(qtw.QWidget):
 		return label
 
 	def exportDb(self):
-		filename = qtw.QFileDialog.getSaveFileName(self,"Export Database","")
+		filename = qtw.QFileDialog.getSaveFileName(self,"Export Database","")[0]
 		print(filename)
+		# check if filename ends with .sql and add extension if needed
+		if not pathlib.Path(filename).suffix == '.sql':
+			filename += '.sql'
 		self.refreshDb(filename)
 		
 	
@@ -216,6 +219,7 @@ class Window(qtw.QWidget):
 def createWindow():
 	app = qtw.QApplication(sys.argv)
 	app.setStyle('Fusion')
+	# TODO: Make color pallete
 	# app.setPalette(colorpalette())
 	win = Window()
 	# win.saveSettings()
