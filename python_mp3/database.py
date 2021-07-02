@@ -2,6 +2,8 @@ import sqlite3
 from sqlite3 import Error
 import traceback
 
+# TODO Detect none entrys
+
 class Database:
 	def __init__(self, db_file):
 		print("Database file" + str(db_file))
