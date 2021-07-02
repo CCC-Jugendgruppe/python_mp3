@@ -6,6 +6,7 @@ import traceback
 
 class Database:
 	def __init__(self, db_file):
+		self.keys = ["artist", "band", "album", "song", "track", "genre", "composer", "copyright", "comment", "year", "url"]
 		print("Database file" + str(db_file))
 		self.db_file = db_file 		 
 		""" Create a database connection to a SQLite database."""
@@ -45,13 +46,10 @@ class Database:
 	def update_database(self, data):
 		sql = " INSERT INTO music (artist, band, album, title, track, genre, composer, copyright, comment, releaseyear, mp3_url) VALUES (?,?,?,?,?,?,?,?,?,?,?)"
 		vallist = []
-		keys = ["artist", "band", "album", "song", "track", "genre", "composer", "copyright", "comment", "year", "url"]
-		i = 0
-
-		for i in range(len(keys)):
+		for i in range(len(self.keys)):
 			try:
 				#print(a[keys[i]])
-				vallist.append(data[keys[i]])
+				vallist.append(data[self.keys[i]])
 			except KeyError:
 				#print("novalue")
 				vallist.append(None)
@@ -72,15 +70,14 @@ class Database:
 		self.conn.commit()
 
 		rows = self.c.fetchall()
+		result = []
+		for i in rows:
+			z = 0
+			dict = {}
+			for y in i:
+				dict[str(self.keys[z])] = y
+				z = z + 1
+			result.append(dict)
+		return result #dict({"songname" : ["test", "test", "test", "test", "test","test"]})
 		
-		return rows #dict({"songname" : ["test", "test", "test", "test", "test","test"]})
-
-"""
-test = Database("../songs.sql")
-test2 = test.get_items()
-for i in test2:
-	print("\nnewsong\n")
-	for y in i:
-		print(y)
-"""
 #SELECT * FROM music;
