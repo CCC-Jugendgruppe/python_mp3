@@ -113,7 +113,6 @@ class Window(qtw.QWidget):
 
 		# Button to export Database
 		exportbtn = qtw.QPushButton('Export')
-		# TODO: export function
 		exportbtn.clicked.connect(self.exportDb)
 		layout.addWidget(exportbtn)
 
@@ -132,19 +131,20 @@ class Window(qtw.QWidget):
 		self.refreshTmpDb()
 		songsdb = Database(tmp_db_path)
 		songsdict = songsdb.get_items() # I am not sure what type of variable needed for Qtablewidget
+		
 		print("test " + str(songsdict))
+		print(len(songsdict))
 
-	# print(len(songsdict))
-
-	# songstable = qtw.QTableWidget()
-	# songstable.setRowCount(len(songsdict))
+		songstable = qtw.QTableWidget()
+		songstable.setRowCount(len(keys(songsdict))
+	
 	# horHeaders = []
 	# for n, key in enumerate(sorted(songsdict)):
-	#	horHeaders.append(key)
-	#	for m, item in enumerate(songsdict):
-	#		newitem = qtw.QTableWidgetItem(item)
-	#		self.setItem(m, n, newitem)
-	# self.setHorizontalHeaderLabels(horHeaders)
+	#		horHeaders.append(key)
+	#		for m, item in enumerate(songsdict):
+	#			newitem = qtw.QTableWidgetItem(item)
+	#			self.setItem(m, n, newitem)
+	# 	self.setHorizontalHeaderLabels(horHeaders)
 
 	# return songstable
 
