@@ -83,10 +83,10 @@ class Window(qtw.QWidget):
 		refreshbtn.resize(refreshbtn.sizeHint())
 		layout.addWidget(refreshbtn)
 		
-		#self.createSongsTable()
-		# songstable = self.createSongsTable()
-		# songstable.show()
-		# leftlayout.addWidget(songstable)
+		self.createSongsTable()
+		songstable = self.createSongsTable()
+		songstable.show()
+		leftlayout.addWidget(songstable)
 
 		frame = self.setupFrame(layout)
 		return frame
@@ -129,12 +129,13 @@ class Window(qtw.QWidget):
 
 	def createSongsTable(self):
 		# TODO Table with Songs
-		self.refreshTmpDb()
+		#self.refreshTmpDb()
+		print(tmp_db_path)
 		songsdb = Database(tmp_db_path)
 		songsdict = songsdb.get_items() # I am not sure what type of variable needed for Qtablewidget
 		
-		print("test " + str(songsdict))
-		print(len(songsdict))
+		print(songsdict)
+		#print(len(songsdict.keys))
 
 		songstable = qtw.QTableWidget()
 		#songstable.setRowCount(len(keys(songsdict)))
