@@ -43,20 +43,24 @@ class Config:
 		else:
 			self.log.error("The file " + self.filename + " does not exist")
 
-	def update(self, item, content):
+	def update(self, content, item = None):
 		"""
 		This function takes the item name in the json and the new updated content.
 		Please use the readfile function for the before state.
 		"""
-		
-		with open(str(self.filename), 'r') as reader:
-			output = reader.read()
-			json = self.__parsejson(output)
-			json[str(item)] = content
-			
-		with open(str(self.filename), 'w') as writer:
-			writer.write(str(json).replace("'","\"" ))
-	
+		json = None
+		if item == None:
+			with open(str(self.filename), 'r') as reader:
+				output = reader.read()
+				json = self.__parsejson(output)
+				json[str(item)] = content
+		else:
+			with open(str(self.filename), 'w') as writer:
+				if item == None:
+					writer.write(str(json).replace("'","\"" ))
+				else:
+					writer.write(str(content).replace("'","\"" ))
+
 	def __parsejson(self, rawdata, item = None):
 		# local function for formatting the json from a string
 		try:
