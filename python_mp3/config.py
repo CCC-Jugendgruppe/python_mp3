@@ -37,10 +37,6 @@ class Config:
 		
 		return self.__parsejson(output, item)
 		
-
-	def update(self):
-		self.log.info("Updated")
-
 	def clear(self):
 		if os.path.exists(str(self.filename)):
 			os.remove(str(self.filename))
@@ -48,6 +44,11 @@ class Config:
 			self.log.error("The file " + self.filename + " does not exist")
 
 	def update(self, item, content):
+		"""
+		This function takes the item name in the json and the new updated content.
+		Please use the readfile function for the before state.
+		"""
+		
 		with open(str(self.filename), 'r') as reader:
 			output = reader.read()
 			json = self.__parsejson(output)
@@ -56,8 +57,8 @@ class Config:
 		with open(str(self.filename), 'w') as writer:
 			writer.write(str(json).replace("'","\"" ))
 	
-			
 	def __parsejson(self, rawdata, item = None):
+		# local function for formatting the json from a string
 		try:
 			jsonobj = json.loads(rawdata)
 			if item == None:
