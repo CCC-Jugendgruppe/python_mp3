@@ -24,6 +24,7 @@ import PyQt6.QtWidgets as qtw
 # python_mp3.<file> needed for proper pip implementation
 from python_mp3.core import songsupdate
 from python_mp3.database import Database
+from python_mp3.config import Config
 
 # TODO get system cache and config path
 # Set path for temporary database to cache 
@@ -37,6 +38,7 @@ class Window(qtw.QWidget):
 	def __init__(self):
 		super().__init__()
 		self.initui()
+		self.config = Config(config_path)
 
 	settings = {}
 
@@ -46,7 +48,7 @@ class Window(qtw.QWidget):
 		self.setWindowTitle('Python mp3')
 		self.setFont(qtg.QFont('SansSerif', 10))
 
-		self.resetSettings()
+		self.config.readfile()
 		# self.loadSettings()
 		print(self.settings)
 
@@ -106,7 +108,7 @@ class Window(qtw.QWidget):
 
 		# Button to reset settings
 		resetbtn = qtw.QPushButton('Reset')
-		resetbtn.clicked.connect(self.resetSettings)
+		resetbtn.clicked.connect(Config.createnew)
 		resetbtn.resize(resetbtn.sizeHint())
 		resetbtn.setToolTip('Reset configuration')
 		layout.addWidget(resetbtn)
@@ -126,7 +128,6 @@ class Window(qtw.QWidget):
 		return layout
 
 	def createSongsTable(self):
-
 		# TODO Table with Songs
 		self.refreshTmpDb()
 		songsdb = Database(tmp_db_path)
@@ -136,25 +137,23 @@ class Window(qtw.QWidget):
 		print(len(songsdict))
 
 		songstable = qtw.QTableWidget()
-		songstable.setRowCount(len(keys(songsdict))
-	
-	# horHeaders = []
-	# for n, key in enumerate(sorted(songsdict)):
-	#		horHeaders.append(key)
-	#		for m, item in enumerate(songsdict):
-	#			newitem = qtw.QTableWidgetItem(item)
-	#			self.setItem(m, n, newitem)
-	# 	self.setHorizontalHeaderLabels(horHeaders)
-
-	# return songstable
+		#songstable.setRowCount(len(keys(songsdict)))
+		# horHeaders = []
+		#	for n, key in enumerate(sorted(songsdict)):
+		#		horHeaders.append(key)
+		#		for m, item in enumerate(songsdict):
+		#			newitem = qtw.QTableWidgetItem(item)
+		#			self.setItem(m, n, newitem)
+		# 	self.setHorizontalHeaderLabels(horHeaders)
+		# return songstable
 
 	def setupLayout(self, orientation):
 		if orientation == 'v':
-				layout = qtw.QVBoxLayout()
+			layout = qtw.QVBoxLayout()
 		elif orientation == 'h':
-				layout = qtw.QHBoxLayout()
+			layout = qtw.QHBoxLayout()
 		else:
-				sys.exit('setupLayout: orientation must be \'v\' or \'h\'')
+			sys.exit('setupLayout: orientation must be \'v\' or \'h\'')
 		layout.setContentsMargins(0, 0, 0, 0)
 		layout.setSpacing(0)
 		layout.setEnabled(True)
@@ -192,28 +191,6 @@ class Window(qtw.QWidget):
 		self.saveSettings()
 		# TODO Quit Dialog
 		qtw.QApplication.instance().quit()
-
-	def resetSettings(self):
-		print('Resetting Configuration')
-		self.settings = {
-			'paths': ['./input'],
-			'mp3_version': 2
-		}
-		print(self.settings)
-
-	def saveSettings(self):
-		print('Saving settings... ' + str(self.settings))
-		with open(config_path, 'w', encoding='utf8') as f:
-			f.write(json.dumps(self.settings, indent=2, ensure_ascii=False))
-
-	def loadSettings(self):
-		print('Loading settings...')
-		if os.path.isfile(config_path):
-			with open(config_path, 'r', encoding='utf8') as f:
-				self.settings = json.load(f)
-		else:
-				self.resetSettings()
-		print('Loaded settings... ' + str(self.settings))
 				
 
 def createWindow():
