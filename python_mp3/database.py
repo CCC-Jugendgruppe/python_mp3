@@ -75,7 +75,8 @@ class Database:
 			z = 0
 			dict = {}
 			for y in i:
-				dict[str(self.keys[z])] = y
+				if y != None:
+					dict[str(self.keys[z])] = y
 				z = z + 1
 			result.append(dict)
 		return result #dict({"songname" : ["test", "test", "test", "test", "test","test"]})

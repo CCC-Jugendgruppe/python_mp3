@@ -10,10 +10,6 @@
 # Shown:
 # 4. Add widget to frame or window
 
-
-
-import json
-import os
 import pathlib
 import sys
 
@@ -30,15 +26,18 @@ from python_mp3.config import Config
 # Set path for temporary database to cache 
 tmp_db_path = str(pathlib.Path.home()) + '/.cache/python_mp3_tmp.sql'
 #please read in the path from the config
-tmp_input_path = ['./input/'] # Temporary solution until proper implementation of config file
-config_path = './python_mp3.conf' # TODO Put into config path when done with implementation
-
+config_path = './config.json' # TODO Put into config path when done with implementation
 
 class Window(qtw.QWidget):
 	def __init__(self):
 		super().__init__()
 		self.initui()
+		
 		self.config = Config(config_path)
+		conf = self.config.readfile()
+		self.dirs = conf["dir"]
+		print(self.dirs)
+		self.mp3v = self.config.readfile("mp3_version")
 		self.settings = {}
 	
 	def initui(self):
@@ -66,44 +65,45 @@ class Window(qtw.QWidget):
 
 	def outputFrame(self):
 		# General Layout Settings
-		layout = self.setupLayout('v')
+		layout = self.__setupLayout('v')
 
 		# Songs Label
-		songslabel = self.titleLabel('Songs')
+		songslabel = self.__titleLabel('Songs')
 		layout.addWidget(songslabel)
 
 		# Button to Refresh Database
 		refreshbtn = qtw.QPushButton('Refresh', self)
 		refreshbtn.setToolTip('Refresh the Database')
 		#refreshbtn_refreshTmpDb = self.refreshDb(tmp_db_path)
-		print(tmp_db_path)
-		refreshbtn.clicked.connect(self.refreshTmpDb)
+		#songsupdate(self.dirs, tmp_db_path, 2)
+
+		refreshbtn.clicked.connect(self.__refreshTmpDb())
 		# TODO: Read config from settings panel
 		refreshbtn.resize(refreshbtn.sizeHint())
 		layout.addWidget(refreshbtn)
 		
-		self.createSongsTable()
-		songstable = self.createSongsTable()
-		#songstable.show()
+		self.__createSongsTable()
+		songstable = self.__createSongsTable()
+		songstable.show()
 		#leftlayout.addWidget(songstable)
 
-		frame = self.setupFrame(layout)
+		frame = self.__setupFrame(layout)
 		return frame
 
 	def settingsFrame(self):
-		layout = self.setupLayout('v')
+		layout = self.__setupLayout('v')
 
-		settingslabel = self.titleLabel('Settings')
+		settingslabel = self.__titleLabel('Settings')
 		layout.addWidget(settingslabel)
 		
 		# TODO Folder selection
 		# TODO Select mp3 version
 
-		frame = self.setupFrame(layout)
+		frame = self.__setupFrame(layout)
 		return frame
 
 	def bottomPanel(self):
-		layout = self.setupLayout('h')
+		layout = self.__setupLayout('h')
 
 		# Button to reset settings
 		resetbtn = qtw.QPushButton('Reset')
@@ -126,19 +126,41 @@ class Window(qtw.QWidget):
 
 		return layout
 
-	def createSongsTable(self):
+	def __createSongsTable(self):
 		# TODO Table with Songs
 		#self.refreshTmpDb()
-		print(tmp_db_path)
+
 		songsdb = Database(tmp_db_path)
 		songsdict = songsdb.get_items() # I am not sure what type of variable needed for Qtablewidget
-		
-		print(songsdict)
-		#print(len(songsdict.keys))
+		#! Please look after garbage collection when using databases
+		songsdb.close_connection()
+		#songsdict = [
+		#	{"artist": "dew", "band": "we", "album": "dqw", "song": "title", "track": "21", "genre": "Breakbeat", "composer": "wer", "copyright": "wer", "comment": "\x00\x00\x00\x00ew", "year": 2012, "url": "\x00rwe"},
+		#	{"artist": "dew", "band": "we", "album": "dqw", "song": "deedwwe", "track": "21", "genre": "Breakbeat", "composer": "wer", "copyright": "wer", "comment": "\x00\x00\x00\x00ew", "year": 2012, "url": "\x00rwe"}
+		#]
 
-		songstable = qtw.QTableWidget()
-		#songstable.setRowCount(len(keys(songsdict)))
-		# horHeaders = []
+		#print(len(songsdict.keys))
+		testlist = [1,2,3,4]
+		songstable = qtw.QTableWidget(len(songsdict), len(songsdict[0].keys()), self)
+		
+		#print(songsdict)
+		#for y in songsdict:
+			#print(y.values())
+		z = 0
+		for i in songsdict:
+			y = -1
+			for values in i.values():
+				newitem = qtw.QTableWidgetItem(str(values))
+				songstable.setItem(z, y, newitem)
+				y += 1
+			z += 1
+		#for i in testlist:
+		#	newitem = qtw.QTableWidgetItem(str(i))
+		#	songstable.setItem(y, 1, newitem)
+		#	y = y + 1
+		
+		return songstable
+	# horHeaders = []
 		#	for n, key in enumerate(sorted(songsdict)):
 		#		horHeaders.append(key)
 		#		for m, item in enumerate(songsdict):
@@ -147,7 +169,7 @@ class Window(qtw.QWidget):
 		# 	self.setHorizontalHeaderLabels(horHeaders)
 		# return songstable
 
-	def setupLayout(self, orientation):
+	def __setupLayout(self, orientation):
 		if orientation == 'v':
 			layout = qtw.QVBoxLayout()
 		elif orientation == 'h':
@@ -159,13 +181,13 @@ class Window(qtw.QWidget):
 		layout.setEnabled(True)
 		return layout
 
-	def setupFrame(self, layout):
+	def __setupFrame(self, layout):
 		frame = qtw.QFrame()
 		frame.setLayout(layout)
 		frame.setFrameShape(qtw.QFrame.Shape.StyledPanel)
 		return frame
 
-	def titleLabel(self, name):
+	def __titleLabel(self, name):
 		label = qtw.QLabel('<b>' + name + '<\b>', self)
 		label.setFont(qtg.QFont('Ubuntu', 15))
 		return label
@@ -176,19 +198,22 @@ class Window(qtw.QWidget):
 		# check if filename ends with .sql and add extension if needed
 		if not pathlib.Path(filename).suffix == '.sql':
 			filename += '.sql'
-		self.refreshDb(filename)
-		
+		self.__refreshDb(filename)
 	
-	def refreshDb(self,path):
+	# please evaluate the nessesarity
+	
+	def __refreshDb(self, path):
 		# print('Input:',tmp_input_path, 'Output:', tmp_db_path)
 		# FIXME Read input paths from setings
-		songsupdate(self.settings.get('paths'),path, 2)
-	
-	def refreshTmpDb(self):
-		songsupdate(tmp_input_path, tmp_db_path, 2 )
+		songsupdate(self.dirs, tmp_db_path, 2)
+		
+		
+		# FIXME please delete one of the db functions
+	def __refreshTmpDb(self):
+		songsupdate(["../input/"], "../", 2)
 		# recursion to hell
 		#self.refreshDb(self.refreshDb(tmp_db_path))
-
+	
 	def quit(self):
 		self.saveSettings()
 		# TODO Quit Dialog
