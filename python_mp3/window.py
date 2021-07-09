@@ -1,14 +1,13 @@
 # Links
 #   https://zetcode.com/pyqt6/
 #
-# use 'python main.py --gui' to execute
-
-# Hidden:
+# use 'python-mp3 --gui' to execute
+#
 # 1. Generate Layout
 # 2. Define widgets
 # 3. Add widget to layout
-# Shown:
 # 4. Add widget to frame or window
+# 
 
 import pathlib
 import sys
