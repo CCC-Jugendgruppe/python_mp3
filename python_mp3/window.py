@@ -39,15 +39,27 @@ class Window(qtw.QWidget):
 	def __init__(self):
 		super().__init__()
 		self.initui()
+<<<<<<< HEAD
 
+=======
+		self.config = Config(config_path)
+		self.settings = {}
+	
+>>>>>>> 61228d30085f4783123ff73552a385e6f5416c48
 	def initui(self):
 		# Global Settings
 		self.setGeometry(0, 0, 650, 500)
 		self.setWindowTitle('Python mp3')
 		self.setFont(qtg.QFont('SansSerif', 10))
 
+<<<<<<< HEAD
 		# self.loadSettings()
 		print(settings)
+=======
+		#self.config.readfile()
+		# self.loadSettings()
+		#print(self.settings)
+>>>>>>> 61228d30085f4783123ff73552a385e6f5416c48
 
 		# General Layout
 		mainlayout = qtw.QVBoxLayout()
@@ -82,8 +94,13 @@ class Window(qtw.QWidget):
 		
 		self.createSongsTable()
 		songstable = self.createSongsTable()
+<<<<<<< HEAD
 		songstable.show()
 		layout.addWidget(songstable)
+=======
+		#songstable.show()
+		#leftlayout.addWidget(songstable)
+>>>>>>> 61228d30085f4783123ff73552a385e6f5416c48
 
 		frame = self.setupFrame(layout)
 		return frame
@@ -105,7 +122,7 @@ class Window(qtw.QWidget):
 
 		# Button to reset settings
 		resetbtn = qtw.QPushButton('Reset')
-		resetbtn.clicked.connect(Config.createnew)
+		#resetbtn.clicked.connect(self.config.createnew)
 		resetbtn.resize(resetbtn.sizeHint())
 		resetbtn.setToolTip('Reset configuration')
 		layout.addWidget(resetbtn)
@@ -183,13 +200,15 @@ class Window(qtw.QWidget):
 		songsupdate(settings.get('paths'),path, 2)
 	
 	def refreshTmpDb(self):
-		self.refreshDb(self.refreshDb(tmp_db_path))
+		songsupdate(tmp_input_path, tmp_db_path, 2 )
+		# recursion to hell
+		#self.refreshDb(self.refreshDb(tmp_db_path))
 
 	def quit(self):
 		self.saveSettings()
 		# TODO Quit Dialog
 		qtw.QApplication.instance().quit()
-				
+		
 
 def createWindow():
 	app = qtw.QApplication(sys.argv)
