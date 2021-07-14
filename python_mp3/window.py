@@ -7,7 +7,7 @@
 # 2. Define widgets
 # 3. Add widget to layout
 # 4. Add widget to frame or window
-# 
+# 5. Show window
 
 import pathlib
 import sys
