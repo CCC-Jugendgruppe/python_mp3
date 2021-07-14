@@ -1,11 +1,14 @@
 import sqlite3
 from sqlite3 import Error
 import traceback
-
-# TODO Detect none entrys
+import os,sys
 
 class Database:
 	def __init__(self, db_file):
+		if os.path.exists(db_file):
+			print("ERROR: Database file does not exist")
+			sys.exit(3)
+
 		self.keys = ["artist", "band", "album", "song", "track", "genre", "composer", "copyright", "comment", "year", "url"]
 		print("Database file" + str(db_file))
 		self.db_file = db_file 		 
@@ -75,7 +78,8 @@ class Database:
 			z = 0
 			dict = {}
 			for y in i:
-				dict[str(self.keys[z])] = y
+				if y != None:
+					dict[str(self.keys[z])] = y
 				z = z + 1
 			result.append(dict)
 		return result #dict({"songname" : ["test", "test", "test", "test", "test","test"]})

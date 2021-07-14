@@ -1,17 +1,21 @@
 import os
 import json
 from python_mp3.log import Log
+
 class Config:
 	def __init__(self, filename):
 		self.log = Log()
 		self.filename = filename
-		self.defaultconfig = """{
+		self.defaultconfig =\
+			{
 				"dir": [
 					"~/music",
-					"~/musik"
+					"~/musik",
+					"./input/"
 				],
 				"mp3_version": 2
-			}"""
+			}
+
 
 	def createnew(self, force = bool(1)):
 		"""
@@ -20,7 +24,7 @@ class Config:
 		"""
 		try:
 			with open(self.filename, 'x' if force else 'a') as writer:
-				writer.write(self.defaultconfig)
+				writer.write(str(self.defaultconfig).replace("'", "\""))
 				self.log.info("file" + self.filename + " created")
 		except():
 			print("[Error]: could not create the file " + self.filename)
@@ -31,7 +35,7 @@ class Config:
 			with open(str(self.filename), 'r') as reader:
 				output = reader.read()
 		except FileNotFoundError:
-			self.log.error("The file " + self.filename + " does not exist")
+			self.log.warning("The file " + self.filename + " does not exist but creating it")
 			self.createnew(0)
 			pass
 		
@@ -48,16 +52,16 @@ class Config:
 		This function takes the item name in the json and the new updated content.
 		Please use the readfile function for the before state.
 		"""
-		json = None
-		if item == None:
+		jsonout = None
+		if item != None:
 			with open(str(self.filename), 'r') as reader:
 				output = reader.read()
-				json = self.__parsejson(output)
-				json[str(item)] = content
+				jsonout = self.__parsejson(output)
+				jsonout[str(item)] = content
 		else:
 			with open(str(self.filename), 'w') as writer:
 				if item == None:
-					writer.write(str(json).replace("'","\"" ))
+					writer.write(str(jsonout).replace("'", "\""))
 				else:
 					writer.write(str(content).replace("'","\"" ))
 
