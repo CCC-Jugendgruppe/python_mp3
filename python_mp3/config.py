@@ -3,8 +3,8 @@ import json
 from python_mp3.log import Log
 
 class Config:
-	def __init__(self, filename):
-		self.log = Log()
+	def __init__(self, filename, verbose):
+		self.log = Log(verbose)
 		self.filename = filename
 		self.defaultconfig =\
 			{

@@ -25,27 +25,26 @@ from python_mp3.log import Log
 # TODO get system cache and config path and put files in respective folder
 # Set path for temporary database to cache 
 tmp_db_path = str(pathlib.Path.home()) + '/.cache/python_mp3_tmp.sql'
-#read configurations
 config_path = './config.json'
-conf = Config(config_path)
-dirs = conf.readfile()["dir"]
-mp3v = conf.readfile("mp3_version")
 
 class Window(qtw.QWidget):
-	def __init__(self):
+	def __init__(self, verbose:bool):	
 		super().__init__()
-		self.initui()
-		self.log=Log()
+		self.log=Log(verbose)
 		
-		#self.config = Config(config_path)
-		#conf = self.config.readfile()
-		#self.dirs = conf["dir"]
-		#print("dirs"+self.dirs)
-		#self.mp3v = self.config.readfile("mp3_version")
-		#self.settings = {}
-	
+		self.log.verboseinfo("Starting")
+		self.config = Config(config_path)
+		conf = self.config.readfile()
+		self.dirs = conf["dir"]
+		print("dirs"+self.dirs)
+		self.mp3v = self.config.readfile("mp3_version")
+
+		self.log.verboseinfo("Starting gui...")
+		self.initui()
+
 	def initui(self):
 		# Global Settings
+		self.log.verboseinfo('GUI: window settings…')
 		self.setGeometry(0, 0, 650, 500)
 		self.setWindowTitle('Python mp3')
 		self.setFont(qtg.QFont('SansSerif', 10))
@@ -65,6 +64,7 @@ class Window(qtw.QWidget):
 		mainlayout.addLayout(self.bottomPanel())
 
 		self.setLayout(mainlayout)
+		self.log.verboseinfo()
 		self.show()
 
 	def outputFrame(self):
@@ -173,7 +173,7 @@ class Window(qtw.QWidget):
 		# 	self.setHorizontalHeaderLabels(horHeaders)
 		return songstable
 
-	def __setupLayout(self, orientation):
+	def __setupLayout(self, orientation:chr):
 		if orientation == 'v':
 			layout = qtw.QVBoxLayout()
 		elif orientation == 'h':
@@ -208,7 +208,7 @@ class Window(qtw.QWidget):
 	
 	def __refreshDb(self, path):
 		self.log.info("Refreshing Database (" + path + ")")
-		songsupdate(dirs, tmp_db_path, 2)
+		songsupdate(self.dirs, tmp_db_path, 2)
 			
 	# FIXME Please delete one of the db functions > Find a way to give options via button connection
 	def __refreshTmpDb(self):
@@ -221,10 +221,10 @@ class Window(qtw.QWidget):
 		qtw.QApplication.instance().quit()
 		
 
-def createWindow():
+def createWindow(verbose):
 	app = qtw.QApplication(sys.argv)
 	app.setStyle('Fusion')
 	# TODO: Make color pallete
 	# app.setPalette(colorpalette())
-	win = Window()
+	win = Window(verbose)
 	sys.exit(app.exec())

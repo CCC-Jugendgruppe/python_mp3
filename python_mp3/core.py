@@ -6,7 +6,7 @@ from python_mp3.database import Database
 import re
 
 
-def songsupdate(input_paths: list, db_output, mp3_version):
+def songsupdate(input_paths: list, db_output, mp3_version, verbose):
 	# check if input_path is array
 	if type(input_paths) != list:
 			if type(input_paths) == str:
