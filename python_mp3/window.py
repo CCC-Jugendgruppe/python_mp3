@@ -21,26 +21,27 @@ from python_mp3.core import songsupdate
 from python_mp3.database import Database
 from python_mp3.config import Config
 
-# TODO get system cache and config path
+# TODO get system cache and config path and put files in respective folder
 # Set path for temporary database to cache 
 tmp_db_path = str(pathlib.Path.home()) + '/.cache/python_mp3_tmp.sql'
-#please read in the path from the config
-tmp_input_path = ['./input/'] # Temporary solution until proper implementation of config file
-config_path = './python_mp3.conf' # TODO Put into system config path when done with implementation
-config = Config(config_path)
-settings = config.readfile()
+#read configurations
+config_path = './config.json'
+conf = Config(config_path)
+dirs = conf.readfile()["dir"]
+mp3v = conf.readfile("mp3_version")
+settings = {}
 
 class Window(qtw.QWidget):
 	def __init__(self):
 		super().__init__()
 		self.initui()
 		
-		self.config = Config(config_path)
-		conf = self.config.readfile()
-		self.dirs = conf["dir"]
-		print(self.dirs)
-		self.mp3v = self.config.readfile("mp3_version")
-		self.settings = {}
+		#self.config = Config(config_path)
+		#conf = self.config.readfile()
+		#self.dirs = conf["dir"]
+		#print("dirs"+self.dirs)
+		#self.mp3v = self.config.readfile("mp3_version")
+		#self.settings = {}
 	
 	def initui(self):
 		# Global Settings
@@ -79,7 +80,7 @@ class Window(qtw.QWidget):
 		#refreshbtn_refreshTmpDb = self.refreshDb(tmp_db_path)
 		#songsupdate(self.dirs, tmp_db_path, 2)
 
-		refreshbtn.clicked.connect(self.__refreshTmpDb())
+		refreshbtn.clicked.connect(self.__refreshTmpDb)
 		# TODO: Read config from settings panel
 		refreshbtn.resize(refreshbtn.sizeHint())
 		layout.addWidget(refreshbtn)
@@ -207,12 +208,12 @@ class Window(qtw.QWidget):
 	def __refreshDb(self, path):
 		# print('Input:',tmp_input_path, 'Output:', tmp_db_path)
 		# FIXME Read input paths from setings
-		songsupdate(settings.get('paths'),path, 2)
-	
-	def refreshTmpDb(self):
-		songsupdate(tmp_input_path, tmp_db_path, 2 )
-		# recursion to hell
-		#self.refreshDb(self.refreshDb(tmp_db_path))
+		songsupdate(dirs, tmp_db_path, 2)
+		
+		
+		# FIXME please delete one of the db functions > Find a way to give options via button connection
+	def __refreshTmpDb(self):
+		self.__refreshDb(tmp_db_path)
 	
 	def quit(self):
 		self.saveSettings()
