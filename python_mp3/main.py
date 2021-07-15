@@ -22,10 +22,8 @@ def main():
   parser.add_argument('--mp3-version', dest='mp3_version', choices=['1', '2'], default='2', help='Set mp3 version')
 
   args = parser.parse_args()
-  #if args.verbose:
-  #  Log.enableverbose(Log)
   
-  # Call right function
+  # Call proper function
   if args.gui:
     createWindow(args.verbose)
   elif args.input_path:

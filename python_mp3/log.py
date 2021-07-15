@@ -10,4 +10,4 @@ class Log:
 
 	def verboseinfo(self, message:chr):
 		if self.verbose:
-			print("[Verbose]:" + message)
+			print('''[Verbose]:''' + message)

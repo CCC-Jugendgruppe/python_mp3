@@ -33,10 +33,10 @@ class Window(qtw.QWidget):
 		self.log=Log(verbose)
 		
 		self.log.verboseinfo("Starting")
-		self.config = Config(config_path)
+		self.config = Config(config_path,verbose)
 		conf = self.config.readfile()
 		self.dirs = conf["dir"]
-		print("dirs"+self.dirs)
+		print(self.dirs)
 		self.mp3v = self.config.readfile("mp3_version")
 
 		self.log.verboseinfo("Starting gui...")
@@ -53,6 +53,7 @@ class Window(qtw.QWidget):
 		# self.loadSettings()
 		#print(self.settings)
 
+		self.log.verboseinfo('GUI: Setting up Layout ...')
 		# General Layout
 		mainlayout = qtw.QVBoxLayout()
 		# Splitter between Output and Settings
@@ -63,8 +64,9 @@ class Window(qtw.QWidget):
 		# Bottom
 		mainlayout.addLayout(self.bottomPanel())
 
+		
 		self.setLayout(mainlayout)
-		self.log.verboseinfo()
+		self.log.verboseinfo('GUI: Showing window ...')
 		self.show()
 
 	def outputFrame(self):
@@ -86,9 +88,10 @@ class Window(qtw.QWidget):
 		refreshbtn.resize(refreshbtn.sizeHint())
 		layout.addWidget(refreshbtn)
 		
-		self.__createSongsTable()
-		songstable = self.__createSongsTable()
-		songstable.show()
+
+		#self.__createSongsTable()
+		#songstable = self.__createSongsTable()
+		#songstable.show()
 		#leftlayout.addWidget(songstable)
 
 		frame = self.__setupFrame(layout)
@@ -197,10 +200,14 @@ class Window(qtw.QWidget):
 		return label
 
 	def exportDb(self):
+		self.log.info('Exporting database')
+		self.log.verboseinfo('Opening save file dialog')
 		filename = qtw.QFileDialog.getSaveFileName(self,"Export Database","")[0]
 		print(filename)
-		# check if filename ends with .sql and add extension if needed
+
+		self.log.verboseinfo('Checking for sql ending')
 		if not pathlib.Path(filename).suffix == '.sql':
+			self.log.verboseinfo('No .sql suffix - adding .sql')
 			filename += '.sql'
 		self.__refreshDb(filename)
 	
@@ -215,9 +222,10 @@ class Window(qtw.QWidget):
 		self.__refreshDb(tmp_db_path)
 	
 	def quit(self):
+		self.log.verboseinfo('Saving settings...')
 		conf.update(conf)
 		# TODO Quit Dialog
-		self.Log.info("Exiting")
+		self.Log.info("Exiting …")
 		qtw.QApplication.instance().quit()
 		
 
