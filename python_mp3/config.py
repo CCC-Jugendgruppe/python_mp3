@@ -78,8 +78,8 @@ class Config:
 			return False
 
 
-test = Config("config.json")
-test.clear()
-test.createnew()
-print(test.readfile())
-test.update("dir", ["test", "test3w"])
+#test = Config("config.json")
+#test.clear()
+#test.createnew()
+#print(test.readfile())
+#test.update("dir", ["test", "test3w"])

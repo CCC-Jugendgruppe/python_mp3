@@ -20,6 +20,7 @@ import PyQt6.QtWidgets as qtw
 from python_mp3.core import songsupdate
 from python_mp3.database import Database
 from python_mp3.config import Config
+from python_mp3.log import Log
 
 # TODO get system cache and config path and put files in respective folder
 # Set path for temporary database to cache 
@@ -29,12 +30,12 @@ config_path = './config.json'
 conf = Config(config_path)
 dirs = conf.readfile()["dir"]
 mp3v = conf.readfile("mp3_version")
-settings = {}
 
 class Window(qtw.QWidget):
 	def __init__(self):
 		super().__init__()
 		self.initui()
+		self.log=Log()
 		
 		#self.config = Config(config_path)
 		#conf = self.config.readfile()
@@ -203,21 +204,20 @@ class Window(qtw.QWidget):
 			filename += '.sql'
 		self.__refreshDb(filename)
 	
-	# please evaluate the nessesarity
+	# Please evaluate the nessesarity
 	
 	def __refreshDb(self, path):
-		# print('Input:',tmp_input_path, 'Output:', tmp_db_path)
-		# FIXME Read input paths from setings
+		self.log.info("Refreshing Database (" + path + ")")
 		songsupdate(dirs, tmp_db_path, 2)
-		
-		
-		# FIXME please delete one of the db functions > Find a way to give options via button connection
+			
+	# FIXME Please delete one of the db functions > Find a way to give options via button connection
 	def __refreshTmpDb(self):
 		self.__refreshDb(tmp_db_path)
 	
 	def quit(self):
-		self.saveSettings()
+		conf.update(conf)
 		# TODO Quit Dialog
+		self.Log.info("Exiting")
 		qtw.QApplication.instance().quit()
 		
 
