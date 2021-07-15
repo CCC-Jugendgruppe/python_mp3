@@ -1,10 +1,11 @@
 import os
+import sys
 import json
 from python_mp3.log import Log
 
 class Config:
-	def __init__(self, filename, verbose):
-		self.log = Log(verbose)
+	def __init__(self, filename:chr, verbose:bool):
+		self.log = Log(verbose,'CONFIG')
 		self.filename = filename
 		self.defaultconfig =\
 			{
@@ -27,7 +28,9 @@ class Config:
 				writer.write(str(self.defaultconfig).replace("'", "\""))
 				self.log.info("file" + self.filename + " created")
 		except():
-			print("[Error]: could not create the file " + self.filename)
+			self.log.error("could not create the file " + self.filename)
+			sys.exit(4)
+			
 
 	def readfile(self, item = None):
 		self.log.info("Filename: " + str(self.filename))

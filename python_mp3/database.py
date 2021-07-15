@@ -2,23 +2,25 @@ import sqlite3
 from sqlite3 import Error
 import traceback
 import os,sys
+from python_mp3.log import Log
 
 class Database:
-	def __init__(self, db_file):
+	def __init__(self, db_file,verbose):
+		self.log = Log(verbose, 'DATABASE')
 		if os.path.exists(db_file):
-			print("ERROR: Database file does not exist")
-			sys.exit(3)
+			self.log.info("Database file" + db_file + "does not exist, creating it ...")
 
 		self.keys = ["artist", "band", "album", "song", "track", "genre", "composer", "copyright", "comment", "year", "url"]
 		print("Database file" + str(db_file))
-		self.db_file = db_file 		 
-		""" Create a database connection to a SQLite database."""
+		self.db_file = db_file
+
+		self.log.verboseinfo('Create a database connection to a SQLite database.')
 		print("Opening " + str(self.db_file))
 		try:
 			self.conn = sqlite3.connect(self.db_file)
 			self.c = self.conn.cursor()
 			
-			print("Done current Sqlite Version: " + str(sqlite3.version) + "\n")
+			self.log.verboseinfo("Done current Sqlite Version: " + str(sqlite3.version))
 		except Error as e:
 			print(e)
 		finally:

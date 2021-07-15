@@ -30,21 +30,21 @@ config_path = './config.json'
 class Window(qtw.QWidget):
 	def __init__(self, verbose:bool):	
 		super().__init__()
-		self.log=Log(verbose)
+		self.log=Log(verbose,'WINDOW')
 		
-		self.log.verboseinfo("Starting")
-		self.config = Config(config_path,verbose)
-		conf = self.config.readfile()
-		self.dirs = conf["dir"]
+		self.log.info("Loading config ...")
+		self.conf = Config(config_path,verbose)
+		self.settings = self.conf.readfile()
+		self.dirs = self.conf.readfile("dir")
 		print(self.dirs)
-		self.mp3v = self.config.readfile("mp3_version")
+		self.mp3v = self.conf.readfile("mp3_version")
 
-		self.log.verboseinfo("Starting gui...")
+		self.log.info("Starting gui...")
 		self.initui()
 
 	def initui(self):
 		# Global Settings
-		self.log.verboseinfo('GUI: window settings…')
+		self.log.verboseinfo('setting global settings ...')
 		self.setGeometry(0, 0, 650, 500)
 		self.setWindowTitle('Python mp3')
 		self.setFont(qtg.QFont('SansSerif', 10))
@@ -53,7 +53,7 @@ class Window(qtw.QWidget):
 		# self.loadSettings()
 		#print(self.settings)
 
-		self.log.verboseinfo('GUI: Setting up Layout ...')
+		self.log.verboseinfo('Setting up Layout ...')
 		# General Layout
 		mainlayout = qtw.QVBoxLayout()
 		# Splitter between Output and Settings
@@ -63,10 +63,9 @@ class Window(qtw.QWidget):
 		mainlayout.addWidget(mainsplitter)
 		# Bottom
 		mainlayout.addLayout(self.bottomPanel())
-
-		
 		self.setLayout(mainlayout)
-		self.log.verboseinfo('GUI: Showing window ...')
+
+		self.log.verboseinfo('Showing window ...')
 		self.show()
 
 	def outputFrame(self):
@@ -137,7 +136,7 @@ class Window(qtw.QWidget):
 		# TODO Table with Songs
 		#self.refreshTmpDb()
 
-		songsdb = Database(tmp_db_path)
+		songsdb = Database(tmp_db_path,self.log.verbose)
 		songsdict = songsdb.get_items() # I am not sure what type of variable needed for Qtablewidget
 		#! Please look after garbage collection when using databases
 		songsdb.close_connection()
@@ -215,17 +214,17 @@ class Window(qtw.QWidget):
 	
 	def __refreshDb(self, path):
 		self.log.info("Refreshing Database (" + path + ")")
-		songsupdate(self.dirs, tmp_db_path, 2)
+		songsupdate(self.dirs, tmp_db_path, 2, self.log.verbose)
 			
 	# FIXME Please delete one of the db functions > Find a way to give options via button connection
 	def __refreshTmpDb(self):
 		self.__refreshDb(tmp_db_path)
 	
 	def quit(self):
-		self.log.verboseinfo('Saving settings...')
-		conf.update(conf)
+		self.log.info('Saving settings...')
+		self.conf.update(self.settings)
 		# TODO Quit Dialog
-		self.Log.info("Exiting …")
+		self.log.info("Exiting …")
 		qtw.QApplication.instance().quit()
 		
 
