@@ -10,7 +10,7 @@
 !python_mp3/__init__.py
 !README.md
 !LICENSE
-
+!start.sh
 !setup.py
 !planing/*
 # Will be removed when proper implementation of Settings
