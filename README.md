@@ -5,7 +5,7 @@ A simple Python script for reading metadata out of mp3 files and storing it in a
 ### 1. Install with pip3
 ```pip3 install https://github.com/CCC-Jugendgruppe/python_mp3/archive/refs/heads/main.zip```
 ### 2. Start the programm
-```python-mp3```
+not working yet ```python-mp3```
 
 ## Install (For contributors)
 ### 0. Open an Terminal
