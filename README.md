@@ -21,4 +21,4 @@ A simple Python script for reading metadata out of mp3 files and storing it in a
 
 ### INFO: ```pip3 install .``` needed after making changes 
 
-das ist mein branch :)
+This branch is for testing.
