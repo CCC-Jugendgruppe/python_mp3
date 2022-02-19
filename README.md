@@ -19,4 +19,5 @@ not working yet ```python-mp3```
 ### 5. Start the programm
 ```python-mp3```
 
+use ```python3 main.py -i /path``` 
 ### INFO: ```pip3 install .``` needed after making changes 
