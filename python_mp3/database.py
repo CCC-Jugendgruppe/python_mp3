@@ -5,7 +5,9 @@ import os,sys
 
 class Database:
 	def __init__(self, db_file):
+		
 		if os.path.exists(db_file):
+			print("test")
 			print("ERROR: Database file does not exist")
 			sys.exit(3)
 

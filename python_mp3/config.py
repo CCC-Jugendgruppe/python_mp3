@@ -9,9 +9,9 @@ class Config:
 		self.defaultconfig =\
 			{
 				"dir": [
-					"~/music",
-					"~/musik",
-					"./input/"
+					"/home/$USER/music",
+                    "/home/$USER/musik",
+                    "./input/"
 				],
 				"mp3_version": 2
 			}
