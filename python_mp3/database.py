@@ -6,10 +6,10 @@ import os,sys
 class Database:
 	def __init__(self, db_file):
 		
-		if os.path.exists(db_file):
+		"""if os.path.exists(db_file):
 			print("test")
 			print("ERROR: Database file does not exist")
-			sys.exit(3)
+			sys.exit(3)"""
 
 		self.keys = ["artist", "band", "album", "song", "track", "genre", "composer", "copyright", "comment", "year", "url"]
 		print("Database file" + str(db_file))
