@@ -1,3 +1,3 @@
 #!/usr/bin/bash
-pip install . --use-feature=in-tree-build
+pip install .
 python-mp3 $@
