@@ -80,7 +80,7 @@ class Window(qtw.QWidget):
 		#refreshbtn_refreshTmpDb = self.refreshDb(tmp_db_path)
 		#songsupdate(self.dirs, tmp_db_path, 2)
 
-		refreshbtn.clicked.connect(self.__refreshTmpDb)
+		refreshbtn.clicked.connect(lambda: self.__refreshDb(tmp_db_path))
 		# TODO: Read config from settings panel
 		refreshbtn.resize(refreshbtn.sizeHint())
 		layout.addWidget(refreshbtn)
@@ -161,9 +161,8 @@ class Window(qtw.QWidget):
 		#	newitem = qtw.QTableWidgetItem(str(i))
 		#	songstable.setItem(y, 1, newitem)
 		#	y = y + 1
-		
-		return songstable
-	# horHeaders = []
+
+		#horHeaders = []
 		#	for n, key in enumerate(sorted(songsdict)):
 		#		horHeaders.append(key)
 		#		for m, item in enumerate(songsdict):
@@ -207,13 +206,8 @@ class Window(qtw.QWidget):
 	
 	def __refreshDb(self, path):
 		# print('Input:',tmp_input_path, 'Output:', tmp_db_path)
-		# FIXME Read input paths from setings
+		# TODO Read input paths from setings
 		songsupdate(dirs, tmp_db_path, 2)
-		
-		
-		# FIXME please delete one of the db functions > Find a way to give options via button connection
-	def __refreshTmpDb(self):
-		self.__refreshDb(tmp_db_path)
 	
 	def quit(self):
 		self.saveSettings()

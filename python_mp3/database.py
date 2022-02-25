@@ -6,10 +6,12 @@ import os,sys
 class Database:
 	def __init__(self, db_file):
 		
-		"""if os.path.exists(db_file):
+		"""
+		if os.path.exists(db_file):
 			print("test")
 			print("ERROR: Database file does not exist")
-			sys.exit(3)"""
+			sys.exit(3)
+		"""
 
 		self.keys = ["artist", "band", "album", "song", "track", "genre", "composer", "copyright", "comment", "year", "url"]
 		print("Database file" + str(db_file))
@@ -78,10 +80,10 @@ class Database:
 		result = []
 		for i in rows:
 			z = 0
-			dict = {}
+			rowdict = {}
 			for y in i:
 				if y != None:
-					dict[str(self.keys[z])] = y
+					rowdict[str(self.keys[z])] = y
 				z = z + 1
 			result.append(dict)
 		return result #dict({"songname" : ["test", "test", "test", "test", "test","test"]})
