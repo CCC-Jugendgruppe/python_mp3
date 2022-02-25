@@ -23,7 +23,8 @@ from python_mp3.config import Config
 
 # TODO get system cache and config path and put files in respective folder
 # Set path for temporary database to cache 
-tmp_db_path = str(pathlib.Path.home()) + '/.cache/python_mp3_tmp.sql'
+#tmp_db_path = str(pathlib.Path.home()) + '/.cache/python_mp3_tmp.sql'
+tmp_db_path = 'songs.sql'
 #read configurations
 config_path = './config.json'
 conf = Config(config_path)
@@ -80,15 +81,15 @@ class Window(qtw.QWidget):
 		#refreshbtn_refreshTmpDb = self.refreshDb(tmp_db_path)
 		#songsupdate(self.dirs, tmp_db_path, 2)
 
+		self.__createSongsTable()
+		songstable = self.__createSongsTable()
+		layout.addWidget(songstable)
+
 		refreshbtn.clicked.connect(lambda: self.__refreshDb(tmp_db_path))
 		# TODO: Read config from settings panel
 		refreshbtn.resize(refreshbtn.sizeHint())
 		layout.addWidget(refreshbtn)
-		
-		self.__createSongsTable()
-		songstable = self.__createSongsTable()
-		songstable.show()
-		#leftlayout.addWidget(songstable)
+
 
 		frame = self.__setupFrame(layout)
 		return frame
@@ -133,14 +134,14 @@ class Window(qtw.QWidget):
 		# TODO Table with Songs
 		#self.refreshTmpDb()
 
-		songsdb = Database(tmp_db_path)
-		songsdict = songsdb.get_items() # I am not sure what type of variable needed for Qtablewidget
-		#! Please look after garbage collection when using databases
-		songsdb.close_connection()
-		#songsdict = [
-		#	{"artist": "dew", "band": "we", "album": "dqw", "song": "title", "track": "21", "genre": "Breakbeat", "composer": "wer", "copyright": "wer", "comment": "\x00\x00\x00\x00ew", "year": 2012, "url": "\x00rwe"},
-		#	{"artist": "dew", "band": "we", "album": "dqw", "song": "deedwwe", "track": "21", "genre": "Breakbeat", "composer": "wer", "copyright": "wer", "comment": "\x00\x00\x00\x00ew", "year": 2012, "url": "\x00rwe"}
-		#]
+		#songsdb = Database(tmp_db_path)
+		#songsdict = songsdb.get_items()  # I am not sure what type of variable needed for Qtablewidget
+		# Please look after garbage collection when using databases
+		#songsdb.close_connection()
+		songsdict = [
+			{"artist": "dew", "band": "we", "album": "dqw", "song": "title", "track": "21", "genre": "Breakbeat", "composer": "wer", "copyright": "wer", "comment": "\x00\x00\x00\x00ew", "year": 2012, "url": "\x00rwe"},
+			{"artist": "dew", "band": "we", "album": "dqw", "song": "deedwwe", "track": "21", "genre": "Breakbeat", "composer": "wer", "copyright": "wer", "comment": "\x00\x00\x00\x00ew", "year": 2012, "url": "\x00rwe"}
+		]
 
 		#print(len(songsdict.keys))
 		testlist = [1,2,3,4]

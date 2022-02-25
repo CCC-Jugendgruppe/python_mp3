@@ -15,5 +15,6 @@
 !planing/*
 # Will be removed when proper implementation of Settings
 !input/PUT_YOUR_MP3_FILES_HERE
+!input/Beat Thee.mp3
 !.github/
 !python_mp3/log.py
