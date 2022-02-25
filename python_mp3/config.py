@@ -26,7 +26,7 @@ class Config:
 			with open(self.filename, 'x' if force else 'a') as writer:
 				writer.write(str(self.defaultconfig).replace("'", "\""))
 				self.log.info("file" + self.filename + " created")
-		except():
+		except:
 			print("[Error]: could not create the file " + self.filename)
 
 	def readfile(self, item = None):
