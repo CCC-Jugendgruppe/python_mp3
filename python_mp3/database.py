@@ -1,5 +1,4 @@
 import sqlite3
-from sqlite3 import Error
 import traceback
 import os,sys
 
@@ -14,7 +13,7 @@ class Database:
 		"""
 
 		self.keys = ["artist", "band", "album", "song", "track", "genre", "composer", "copyright", "comment", "year", "url"]
-		print("Database file" + str(db_file))
+		print("Database file " + str(db_file))
 		self.db_file = db_file 		 
 		""" Create a database connection to a SQLite database."""
 		print("Opening " + str(self.db_file))
@@ -23,10 +22,10 @@ class Database:
 			self.c = self.conn.cursor()
 			
 			print("Done current Sqlite Version: " + str(sqlite3.version) + "\n")
-		except Error as e:
+		except sqlite3.Error as e:
 			print(e)
 		finally:
-			self.conn
+			return self.conn
 
 	def close_connection(self):
 		if self.conn != None:
@@ -34,21 +33,24 @@ class Database:
 			print("close DB connection")
 
 	def init_database(self):
-		self.conn.execute('''CREATE TABLE IF NOT EXISTS music 
-			(artist TEXT NULL,
-			band TEXT NULL,
-			album TEXT NULL,
-			title TEXT NULL UNIQUE,
-			track TEXT NULL,
-			genre TEXT NULL,
-			composer TEXT NULL, 
-			copyright TEXT NULL, 
-			comment TEXT NULL,
-			releaseyear INT NULL,
-			mp3_url TEXT NULL
-			);''')
-		self.conn.commit()
-		print("Done")    
+		try:
+			self.conn.execute('''CREATE TABLE IF NOT EXISTS music 
+				(artist TEXT NULL,
+				band TEXT NULL,
+				album TEXT NULL,
+				title TEXT NULL UNIQUE,
+				track TEXT NULL,
+				genre TEXT NULL,
+				composer TEXT NULL, 
+				copyright TEXT NULL, 
+				comment TEXT NULL,
+				releaseyear INT NULL,
+				mp3_url TEXT NULL
+				);''')
+			self.conn.commit()
+		except Exception as exc:
+			print("Error: " + exc)
+		print("Done")
 
 	def update_database(self, data):
 		sql = " INSERT INTO music (artist, band, album, title, track, genre, composer, copyright, comment, releaseyear, mp3_url) VALUES (?,?,?,?,?,?,?,?,?,?,?)"
@@ -78,14 +80,14 @@ class Database:
 
 		rows = self.c.fetchall()
 		result = []
-		for i in rows:
-			z = 0
+		for row in rows:
+			index = 0
 			rowdict = {}
-			for y in i:
-				if y != None:
-					rowdict[str(self.keys[z])] = y
-				z = z + 1
-			result.append(dict)
+			for cell in row:
+				if cell != None:
+					rowdict[str(self.keys[index])] = cell
+				index = index + 1
+			result.append(rowdict)
 		return result #dict({"songname" : ["test", "test", "test", "test", "test","test"]})
 		
 #SELECT * FROM music;
