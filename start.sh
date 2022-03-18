@@ -1,3 +1,3 @@
 #!/usr/bin/bash
-pip install .
+python3 -m pip install .
 python-mp3 $@
