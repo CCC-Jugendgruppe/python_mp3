@@ -9,11 +9,11 @@ import re
 def songsupdate(input_paths: list, db_output, mp3_version):
 	# check if input_path is array
 	if type(input_paths) != list:
-			if type(input_paths) == str:
-				print('Converting string into list...')
-				input_paths = [input_paths]
-			else:
-				sys.exit('songsupdate: input_path has to be an Array')
+		if type(input_paths) == str:
+			print('Converting string into list...')
+			input_paths = [input_paths]
+		else:
+			sys.exit('songsupdate: input_path has to be an Array')
 	connection = None
 	db = Database(db_output)
 	db.init_database()
@@ -50,11 +50,11 @@ def songsupdate(input_paths: list, db_output, mp3_version):
 							print(tags["ID3TagV2"])
 							print("\n")
 							db.update_database(tags["ID3TagV2"])
-						
+
 					else:
 						print("Selected ID3TagV1")
 						if tags["ID3TagV1"] == {}:
-								print("no Metadata\n")
+							print("no Metadata\n")
 						else:
 							print(tags["ID3TagV1"])
 							print("\n")

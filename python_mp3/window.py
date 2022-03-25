@@ -23,36 +23,37 @@ from python_mp3.config import Config
 
 # TODO get system cache and config path and put files in respective folder
 # Set path for temporary database to cache 
-#tmp_db_path = str(pathlib.Path.home()) + '/.cache/python_mp3_tmp.sql'
+# tmp_db_path = str(pathlib.Path.home()) + '/.cache/python_mp3_tmp.sql'
 tmp_db_path = 'songs.sql'
-#read configurations
+# read configurations
 config_path = './config.json'
 conf = Config(config_path)
 dirs = conf.readfile()["dir"]
 mp3v = conf.readfile("mp3_version")
 settings = {}
 
+
 class Window(qtw.QWidget):
 	def __init__(self):
 		super().__init__()
 		self.initui()
-		
-		#self.config = Config(config_path)
-		#conf = self.config.readfile()
-		#self.dirs = conf["dir"]
-		#print("dirs"+self.dirs)
-		#self.mp3v = self.config.readfile("mp3_version")
-		#self.settings = {}
-	
+
+	# self.config = Config(config_path)
+	# conf = self.config.readfile()
+	# self.dirs = conf["dir"]
+	# print("dirs"+self.dirs)
+	# self.mp3v = self.config.readfile("mp3_version")
+	# self.settings = {}
+
 	def initui(self):
 		# Global Settings
 		self.setGeometry(0, 0, 650, 500)
 		self.setWindowTitle('Python mp3')
 		self.setFont(qtg.QFont('SansSerif', 10))
 
-		#self.config.readfile()
+		# self.config.readfile()
 		# self.loadSettings()
-		#print(self.settings)
+		# print(self.settings)
 
 		# General Layout
 		mainlayout = qtw.QVBoxLayout()
@@ -70,7 +71,6 @@ class Window(qtw.QWidget):
 	def outputFrame(self):
 		# General Layout Settings
 		layout = self.__setupLayout('v')
-
 		# Songs Label
 		songslabel = self.__titleLabel('Songs')
 		layout.addWidget(songslabel)
@@ -78,8 +78,8 @@ class Window(qtw.QWidget):
 		# Button to Refresh Database
 		refreshbtn = qtw.QPushButton('Refresh', self)
 		refreshbtn.setToolTip('Refresh the Database')
-		#refreshbtn_refreshTmpDb = self.refreshDb(tmp_db_path)
-		#songsupdate(self.dirs, tmp_db_path, 2)
+		# refreshbtn_refreshTmpDb = self.refreshDb(tmp_db_path)
+		# songsupdate(self.dirs, tmp_db_path, 2)
 
 		self.__createSongsTable()
 		songstable = self.__createSongsTable()
@@ -90,7 +90,6 @@ class Window(qtw.QWidget):
 		refreshbtn.resize(refreshbtn.sizeHint())
 		layout.addWidget(refreshbtn)
 
-
 		frame = self.__setupFrame(layout)
 		return frame
 
@@ -99,7 +98,7 @@ class Window(qtw.QWidget):
 
 		settingslabel = self.__titleLabel('Settings')
 		layout.addWidget(settingslabel)
-		
+
 		# TODO Folder selection
 		# TODO Select mp3 version
 
@@ -111,7 +110,7 @@ class Window(qtw.QWidget):
 
 		# Button to reset settings
 		resetbtn = qtw.QPushButton('Reset')
-		#resetbtn.clicked.connect(self.config.createnew)
+		# resetbtn.clicked.connect(self.config.createnew)
 		resetbtn.resize(resetbtn.sizeHint())
 		resetbtn.setToolTip('Reset configuration')
 		layout.addWidget(resetbtn)
@@ -125,7 +124,7 @@ class Window(qtw.QWidget):
 		quitbtn = qtw.QPushButton('Quit')
 		quitbtn.clicked.connect(self.quit)
 		quitbtn.resize(quitbtn.sizeHint())
-		quitbtn.setToolTip('Exit the Programm')
+		quitbtn.setToolTip('Exit the Program')
 		layout.addWidget(quitbtn)
 
 		return layout
@@ -158,12 +157,12 @@ class Window(qtw.QWidget):
 				songstable.setItem(z, y, newitem)
 				y += 1
 			z += 1
-		#for i in testlist:
+		# for i in testlist:
 		#	newitem = qtw.QTableWidgetItem(str(i))
 		#	songstable.setItem(y, 1, newitem)
 		#	y = y + 1
 
-		#horHeaders = []
+		# horHeaders = []
 		#	for n, key in enumerate(sorted(songsdict)):
 		#		horHeaders.append(key)
 		#		for m, item in enumerate(songsdict):
@@ -196,25 +195,25 @@ class Window(qtw.QWidget):
 		return label
 
 	def exportDb(self):
-		filename = qtw.QFileDialog.getSaveFileName(self,"Export Database","")[0]
+		filename = qtw.QFileDialog.getSaveFileName(self, "Export Database", "")[0]
 		print(filename)
 		# check if filename ends with .sql and add extension if needed
 		if not pathlib.Path(filename).suffix == '.sql':
 			filename += '.sql'
 		self.__refreshDb(filename)
-	
+
 	# please evaluate the nessesarity
-	
+
 	def __refreshDb(self, path):
 		# print('Input:',tmp_input_path, 'Output:', tmp_db_path)
 		# TODO Read input paths from setings
 		songsupdate(dirs, tmp_db_path, 2)
-	
+
 	def quit(self):
 		self.saveSettings()
 		# TODO Quit Dialog
 		qtw.QApplication.instance().quit()
-		
+
 
 def createWindow():
 	app = qtw.QApplication(sys.argv)
