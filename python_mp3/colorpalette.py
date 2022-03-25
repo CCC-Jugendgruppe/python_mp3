@@ -2,7 +2,7 @@
 
 import PyQt6.QtGui as qtg
 
- 
+
 def colorpalette():
 	darkpalette = qtg.QPalette()
 	darkpalette.setColor(qtg.QPalette.window, qtg.QColor(53, 53, 53))
