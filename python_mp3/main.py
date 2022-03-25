@@ -2,6 +2,8 @@ from argparse import ArgumentParser
 from python_mp3.window import createWindow
 from python_mp3.core import songsupdate
 
+# TODO Localization
+
 # example for getting the current saved data in the database
 """
 test1 = Database("songs.sql")

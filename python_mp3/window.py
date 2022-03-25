@@ -83,7 +83,7 @@ class Window(qtw.QWidget):
 		refreshbtn.resize(refreshbtn.sizeHint())
 		layout.addWidget(refreshbtn)
 
-		#self.__createSongsTable()
+		# self.__createSongsTable()
 		songstable = self.__createSongsTable()
 		layout.addWidget(songstable)
 
@@ -130,22 +130,25 @@ class Window(qtw.QWidget):
 
 	def __createSongsTable(self):
 		# TODO Table with Songs
-		# self.__refreshDb(tmp_db_path)
-		# songsdb = Database(tmp_db_path)
-		# songsdict = songsdb.get_items()  # I am not sure what type of variable needed for Qtablewidget
+		self.__refreshDb(tmp_db_path)
+		songsdb = Database(tmp_db_path)
+		songsdict = songsdb.get_items()  # I am not sure what type of variable needed for Qtablewidget
 		# Please look after garbage collection when using databases
-		# songsdb.close_connection()
+		songsdb.close_connection()
 
+		"""
 		songsdict = [
 			{"artist": "dew", "band": "we", "album": "dqw", "song": "title", "track": "21", "genre": "Breakbeat",
 			 "composer": "wer", "copyright": "wer", "comment": "\x00\x00\x00\x00ew", "year": 2012, "url": "\x00rwe"},
 			{"artist": "dew", "band": "we", "album": "dqw", "song": "deedwwe", "track": "21", "genre": "Breakbeat",
 			 "composer": "wer", "copyright": "wer", "comment": "\x00\x00\x00\x00ew", "year": 2012, "url": "\x00rwe"}
 		]
+		"""
 
-		#print(len(songsdict[0].keys))
+		print(songsdict)
 		testlist = [1, 2, 3, 4]
 		songstable = qtw.QTableWidget(len(songsdict), len(songsdict[0].keys()), self)
+		songstable.setHorizontalHeaderLabels(songsdb.keys)  # TODO Localize this
 
 		# print(songsdict)
 		# for y in songsdict:
