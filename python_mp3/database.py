@@ -24,8 +24,6 @@ class Database:
 			print("Done current Sqlite Version: " + str(sqlite3.version) + "\n")
 		except sqlite3.Error as e:
 			print(e)
-		finally:
-			return self.conn
 
 	def close_connection(self):
 		if self.conn != None:
@@ -74,11 +72,11 @@ class Database:
 			pass
 	
 	def get_items(self):
-		print(self.c.execute('SELECT * FROM music;'))
+		self.c.execute('SELECT * FROM music;')		# gets all rows from table 'music'
 	
-		self.conn.commit()
+		self.conn.commit()			# actually gets the items, which is needed to use retrieved items
 
-		rows = self.c.fetchall()
+		rows = self.c.fetchall()	# loads all selected rows from previous statement into variable 'rows'
 		result = []
 		for row in rows:
 			index = 0
