@@ -78,17 +78,14 @@ class Window(qtw.QWidget):
 		# Button to Refresh Database
 		refreshbtn = qtw.QPushButton('Refresh', self)
 		refreshbtn.setToolTip('Refresh the Database')
-		# refreshbtn_refreshTmpDb = self.refreshDb(tmp_db_path)
-		# songsupdate(self.dirs, tmp_db_path, 2)
-
-		self.__createSongsTable()
-		songstable = self.__createSongsTable()
-		layout.addWidget(songstable)
-
 		refreshbtn.clicked.connect(lambda: self.__refreshDb(tmp_db_path))
 		# TODO: Read config from settings panel
 		refreshbtn.resize(refreshbtn.sizeHint())
 		layout.addWidget(refreshbtn)
+
+		#self.__createSongsTable()
+		songstable = self.__createSongsTable()
+		layout.addWidget(songstable)
 
 		frame = self.__setupFrame(layout)
 		return frame
@@ -110,6 +107,7 @@ class Window(qtw.QWidget):
 
 		# Button to reset settings
 		resetbtn = qtw.QPushButton('Reset')
+		# TODO Link function
 		# resetbtn.clicked.connect(self.config.createnew)
 		resetbtn.resize(resetbtn.sizeHint())
 		resetbtn.setToolTip('Reset configuration')
@@ -117,6 +115,7 @@ class Window(qtw.QWidget):
 
 		# Button to export Database
 		exportbtn = qtw.QPushButton('Export')
+		# TODO Tooltip for Button
 		exportbtn.clicked.connect(self.exportDb)
 		layout.addWidget(exportbtn)
 
@@ -131,27 +130,30 @@ class Window(qtw.QWidget):
 
 	def __createSongsTable(self):
 		# TODO Table with Songs
-		#self.refreshTmpDb()
-
-		songsdb = Database(tmp_db_path)
-		songsdict = songsdb.get_items()  # I am not sure what type of variable needed for Qtablewidget
+		# self.__refreshDb(tmp_db_path)
+		# songsdb = Database(tmp_db_path)
+		# songsdict = songsdb.get_items()  # I am not sure what type of variable needed for Qtablewidget
 		# Please look after garbage collection when using databases
-		songsdb.close_connection()
-		#songsdict = [
-			#{"artist": "dew", "band": "we", "album": "dqw", "song": "title", "track": "21", "genre": "Breakbeat", "composer": "wer", "copyright": "wer", "comment": "\x00\x00\x00\x00ew", "year": 2012, "url": "\x00rwe"},
-			#{"artist": "dew", "band": "we", "album": "dqw", "song": "deedwwe", "track": "21", "genre": "Breakbeat", "composer": "wer", "copyright": "wer", "comment": "\x00\x00\x00\x00ew", "year": 2012, "url": "\x00rwe"}
-		#]
-		print(songsdict)
+		# songsdb.close_connection()
 
-		print(len(songsdict.keys))
-		testlist = [1,2,3,4]
+		songsdict = [
+			{"artist": "dew", "band": "we", "album": "dqw", "song": "title", "track": "21", "genre": "Breakbeat",
+			 "composer": "wer", "copyright": "wer", "comment": "\x00\x00\x00\x00ew", "year": 2012, "url": "\x00rwe"},
+			{"artist": "dew", "band": "we", "album": "dqw", "song": "deedwwe", "track": "21", "genre": "Breakbeat",
+			 "composer": "wer", "copyright": "wer", "comment": "\x00\x00\x00\x00ew", "year": 2012, "url": "\x00rwe"}
+		]
+
+		#print(len(songsdict[0].keys))
+		testlist = [1, 2, 3, 4]
 		songstable = qtw.QTableWidget(len(songsdict), len(songsdict[0].keys()), self)
-		
-		#for y in songsdict:
-			#print(y.values())
+
+		# print(songsdict)
+		# for y in songsdict:
+		# print(y.values())
 		z = 0
+		# Create entry for every element in dict
 		for i in songsdict:
-			y = -1
+			y = 0
 			for values in i.values():
 				newitem = qtw.QTableWidgetItem(str(values))
 				songstable.setItem(z, y, newitem)
@@ -195,9 +197,12 @@ class Window(qtw.QWidget):
 		return label
 
 	def exportDb(self):
+		# TODO use xdg file Portal
 		filename = qtw.QFileDialog.getSaveFileName(self, "Export Database", "")[0]
 		print(filename)
+
 		# check if filename ends with .sql and add extension if needed
+		# TODO Does this is nessary ?
 		if not pathlib.Path(filename).suffix == '.sql':
 			filename += '.sql'
 		self.__refreshDb(filename)
@@ -206,11 +211,10 @@ class Window(qtw.QWidget):
 
 	def __refreshDb(self, path):
 		# print('Input:',tmp_input_path, 'Output:', tmp_db_path)
-		# TODO Read input paths from setings
 		songsupdate(dirs, tmp_db_path, 2)
 
 	def quit(self):
-		self.saveSettings()
+		# TODO self.saveSettings()
 		# TODO Quit Dialog
 		qtw.QApplication.instance().quit()
 
