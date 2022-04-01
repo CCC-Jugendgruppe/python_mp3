@@ -204,7 +204,7 @@ class Window(qtw.QWidget):
 		return label
 
 	def importSongs(self):
-		# test
+		# write opened file to dir array in json file and don't reload everything
 		print('asdf')
 		songs = qtw.QFileDialog.getOpenFileName(self, "Import Songs")
 		print(songs)

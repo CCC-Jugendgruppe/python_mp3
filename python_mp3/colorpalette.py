@@ -1,5 +1,5 @@
 # https://stackoverflow.com/questions/48256772/dark-theme-for-qt-widgets
-#
+
 import PyQt6.QtGui as qtg
 
 
