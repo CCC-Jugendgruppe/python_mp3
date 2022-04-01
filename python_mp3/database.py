@@ -32,7 +32,9 @@ class Database:
 	def init_database(self):
 		try:
 			self.conn.execute('''CREATE TABLE IF NOT EXISTS music 
-				(artist TEXT NULL,
+				(
+				id INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT,
+				artist TEXT NULL,
 				band TEXT NULL,
 				album TEXT NULL,
 				title TEXT NULL UNIQUE,
