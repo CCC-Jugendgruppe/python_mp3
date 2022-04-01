@@ -83,7 +83,7 @@ class Window(qtw.QWidget):
 		refreshbtn.resize(refreshbtn.sizeHint())
 		layout.addWidget(refreshbtn)
 
-		# self.__createSongsTable()
+		#self.__createSongsTable()
 		songstable = self.__createSongsTable()
 		layout.addWidget(songstable)
 
@@ -119,6 +119,11 @@ class Window(qtw.QWidget):
 		exportbtn.clicked.connect(self.exportDb)
 		layout.addWidget(exportbtn)
 
+		importBtn = qtw.QPushButton('Import Songs', self)
+		importBtn.setToolTip('Import your mp3 files')
+		importBtn.clicked.connect(lambda: self.importSongs())
+
+
 		# Button to Quit Programm
 		quitbtn = qtw.QPushButton('Quit')
 		quitbtn.clicked.connect(self.quit)
@@ -135,7 +140,6 @@ class Window(qtw.QWidget):
 		songsdict = songsdb.get_items()  # I am not sure what type of variable needed for Qtablewidget
 		# Please look after garbage collection when using databases
 		songsdb.close_connection()
-
 		"""
 		songsdict = [
 			{"artist": "dew", "band": "we", "album": "dqw", "song": "title", "track": "21", "genre": "Breakbeat",
@@ -144,11 +148,9 @@ class Window(qtw.QWidget):
 			 "composer": "wer", "copyright": "wer", "comment": "\x00\x00\x00\x00ew", "year": 2012, "url": "\x00rwe"}
 		]
 		"""
-
-		print(songsdict)
+		#print(len(songsdict[0].keys))
 		testlist = [1, 2, 3, 4]
 		songstable = qtw.QTableWidget(len(songsdict), len(songsdict[0].keys()), self)
-		songstable.setHorizontalHeaderLabels(songsdb.keys)  # TODO Localize this
 
 		# print(songsdict)
 		# for y in songsdict:
@@ -198,6 +200,11 @@ class Window(qtw.QWidget):
 		label = qtw.QLabel('<b>' + name + '<\b>', self)
 		label.setFont(qtg.QFont('Ubuntu', 15))
 		return label
+
+	def importSongs(self):
+		# test
+		print('asdf')
+		songs = qtw.QFileDialog.getOpenFileName(self, "Import Songs")
 
 	def exportDb(self):
 		# TODO use xdg file Portal
