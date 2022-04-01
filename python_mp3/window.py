@@ -11,6 +11,7 @@
 
 import pathlib
 import sys
+import json
 
 import PyQt6.QtCore as qtc
 import PyQt6.QtGui as qtg
@@ -206,6 +207,11 @@ class Window(qtw.QWidget):
 		# test
 		print('asdf')
 		songs = qtw.QFileDialog.getOpenFileName(self, "Import Songs")
+		print(songs)
+
+		with open('config.json', 'r+') as fn:
+			data = json.load(fn)
+			print(data)
 
 	def exportDb(self):
 		# TODO use xdg file Portal
