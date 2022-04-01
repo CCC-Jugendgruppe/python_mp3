@@ -122,7 +122,7 @@ class Window(qtw.QWidget):
 		importBtn = qtw.QPushButton('Import Songs', self)
 		importBtn.setToolTip('Import your mp3 files')
 		importBtn.clicked.connect(lambda: self.importSongs())
-
+		layout.addWidget(importBtn)
 
 		# Button to Quit Programm
 		quitbtn = qtw.QPushButton('Quit')
@@ -151,6 +151,7 @@ class Window(qtw.QWidget):
 		#print(len(songsdict[0].keys))
 		testlist = [1, 2, 3, 4]
 		songstable = qtw.QTableWidget(len(songsdict), len(songsdict[0].keys()), self)
+		songstable.setHorizontalHeaderLabels(songsdb.keys)
 
 		# print(songsdict)
 		# for y in songsdict:
