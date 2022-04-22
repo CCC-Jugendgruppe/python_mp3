@@ -152,7 +152,7 @@ class Window(qtw.QWidget):
 		#print(len(songsdict[0].keys))
 		testlist = [1, 2, 3, 4]
 		songstable = qtw.QTableWidget(len(songsdict), len(songsdict[0].keys()), self)
-		songstable.setHorizontalHeaderLabels(songsdb.keys)
+		songstable.setHorizontalHeaderLabels(["id"] + songsdb.keys)
 
 		# print(songsdict)
 		# for y in songsdict:
