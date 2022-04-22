@@ -25,7 +25,7 @@ class Config:
 		try:
 			with open(self.filename, 'x' if force else 'a') as writer:
 				writer.write(str(self.defaultconfig).replace("'", "\""))
-				self.log.info("file" + self.filename + " created")
+				self.log.info("file " + self.filename + " created")
 		except Exception as e:
 			print("[Error]: could not create the file " + self.filename + " : " + str(e))
 
@@ -77,8 +77,7 @@ class Config:
 			return False
 
 
-test = Config("config.json")
-test.clear()
-test.createnew()
-print(test.readfile())
-test.update("dir", ["test", "test3w"])
+	def reset(self):
+		with open(self.filename, 'w') as writer:
+			writer.write(str(self.defaultconfig).replace("'", "\""))
+			print("Resetting Config")

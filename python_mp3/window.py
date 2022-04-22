@@ -107,8 +107,8 @@ class Window(qtw.QWidget):
 		layout = self.__setupLayout('h')
 
 		# Button to reset settings
-		resetbtn = qtw.QPushButton('Reset')
-		# TODO Link function
+		resetbtn = qtw.QPushButton('Reset Config')
+		resetbtn.clicked.connect(conf.reset)
 		# resetbtn.clicked.connect(self.config.createnew)
 		resetbtn.resize(resetbtn.sizeHint())
 		resetbtn.setToolTip('Reset configuration')
@@ -215,12 +215,11 @@ class Window(qtw.QWidget):
 
 	def exportDb(self):
 		# TODO use xdg file Portal
-		filename = qtw.QFileDialog.getSaveFileName(self, "Export Database", "")[0]
-		print(filename)
+		filename = qtw.QFileDialog.getSaveFileName(self, "Export Database", ".sql")[0]
 
 		# check if filename ends with .sql and add extension if needed
-		# TODO Does this is nessary ?
-		if not pathlib.Path(filename).suffix == '.sql':
+		# TODO Is this is nessary ?
+		if pathlib.Path(filename).suffix != '.sql':
 			filename += '.sql'
 		self.__refreshDb(filename)
 
@@ -228,7 +227,7 @@ class Window(qtw.QWidget):
 
 	def __refreshDb(self, path):
 		# print('Input:',tmp_input_path, 'Output:', tmp_db_path)
-		songsupdate(dirs, tmp_db_path, 2)
+		songsupdate(dirs, path, 2)
 
 	def quit(self):
 		# TODO self.saveSettings()
