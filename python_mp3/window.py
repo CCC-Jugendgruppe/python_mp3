@@ -69,7 +69,7 @@ class Window(qtw.QWidget):
 		self.setLayout(mainlayout)
 		self.show()
 
-	def outputFrame(self):
+	def outputFrame(self) -> qtw.QFrame:
 		# General Layout Settings
 		layout = self.__setupLayout('v')
 		# Songs Label
@@ -141,6 +141,8 @@ class Window(qtw.QWidget):
 		songsdict = songsdb.get_items()  # I am not sure what type of variable needed for Qtablewidget
 		# Please look after garbage collection when using databases
 		songsdb.close_connection()
+		if len(songsdict) < 1:
+			return None
 		"""
 		songsdict = [
 			{"artist": "dew", "band": "we", "album": "dqw", "song": "title", "track": "21", "genre": "Breakbeat",
@@ -198,7 +200,7 @@ class Window(qtw.QWidget):
 		frame.setFrameShape(qtw.QFrame.Shape.StyledPanel)
 		return frame
 
-	def __titleLabel(self, name):
+	def __titleLabel(self, name: str):
 		label = qtw.QLabel('<b>' + name + '<\b>', self)
 		label.setFont(qtg.QFont('Ubuntu', 15))
 		return label
