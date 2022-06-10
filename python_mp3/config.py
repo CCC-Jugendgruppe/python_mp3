@@ -17,7 +17,7 @@ class Config:
 				"mp3_version": 2
 			}
 
-	def createnew(self, force=bool(1)):
+	def createnew(self, force:bool=bool(1)):
 		"""
 			Create a new file containing the default config
 			if force is true overwrites the current file if its false only appends the default config
@@ -64,17 +64,18 @@ class Config:
 				else:
 					writer.write(str(content).replace("'", "\""))
 
-	def __parsejson(self, rawdata, item=None):
+	def __parsejson(self, rawdata: str, item=None) -> str:
 		# local function for formatting the json from a string
 		try:
-			jsonobj = json.loads(rawdata)
+			if rawdata:
+				jsonobj = json.loads(rawdata)
 			if item is None:
 				return jsonobj
 			else:
 				return jsonobj[item]
 		except Exception as e:
 			self.log.error("The object " + item if item is not None else "ALL" + " couldn't be found: " + str(e))
-			return False
+			return "False"
 
 
 	def reset(self):

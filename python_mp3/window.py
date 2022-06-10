@@ -209,9 +209,13 @@ class Window(qtw.QWidget):
 		songs = qtw.QFileDialog.getOpenFileName(self, "Import Songs")
 		print(songs)
 
-		with open('config.json', 'r+') as fn:
-			data = json.load(fn)
-			print(data)
+		with open('config.json', 'r+') as f:
+			data = json.load(f)
+			if type(songs) == tuple:
+				data["dir"].append(songs[0])
+
+		with open('config.json', "w") as f:
+			json.dump(data, f, ensure_ascii=False)
 
 	def exportDb(self):
 		# TODO use xdg file Portal
