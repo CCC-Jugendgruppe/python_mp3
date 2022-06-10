@@ -180,7 +180,7 @@ class Window(qtw.QWidget):
 		# 	self.setHorizontalHeaderLabels(horHeaders)
 		return songstable
 
-	def __setupLayout(self, orientation):
+	def __setupLayout(self, orientation: str):
 		if orientation == 'v':
 			layout = qtw.QVBoxLayout()
 		elif orientation == 'h':
