@@ -134,7 +134,7 @@ class Window(qtw.QWidget):
 
 		return layout
 
-	def __createSongsTable(self):
+	def __createSongsTable(self) -> qtw.QTableWidgetItem:
 		# TODO Table with Songs
 		self.__refreshDb(tmp_db_path)
 		songsdb = Database(tmp_db_path)

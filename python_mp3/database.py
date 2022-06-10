@@ -2,7 +2,7 @@ import sqlite3
 
 
 class Database:
-	def __init__(self, db_file):
+	def __init__(self, db_file: str):
 
 		"""
 		if os.path.exists(db_file):
@@ -37,7 +37,7 @@ class Database:
 				artist TEXT NULL,
 				band TEXT NULL,
 				album TEXT NULL,
-				title TEXT NULL UNIQUE,
+				title TEXT NULL,
 				track TEXT NULL,
 				genre TEXT NULL,
 				composer TEXT NULL, 
@@ -51,7 +51,7 @@ class Database:
 			print("Error: " + str(exc))
 		print("Done")
 
-	def update_database(self, data):
+	def update_database(self, data: dict):
 		sql = " INSERT INTO music (artist, band, album, title, track, genre, composer, copyright, comment, releaseyear, mp3_url) VALUES (?,?,?,?,?,?,?,?,?,?,?)"
 		vallist = []
 		for i in range(len(self.keys)):
@@ -71,7 +71,7 @@ class Database:
 			print("error when writing to the database")
 			print(e)
 
-	def get_items(self):
+	def get_items(self) -> list:
 		self.c.execute('SELECT * FROM music;')		# gets all rows from table 'music'
 	
 		self.conn.commit()			# actually gets the items, which is needed to use retrieved items
