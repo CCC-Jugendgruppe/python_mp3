@@ -12,7 +12,7 @@ print(test)
 test1.close_connection()
 """
 
-
+  
 def main():
   parser = ArgumentParser(description='Convert Songs into an Database')
   parser.add_argument('-g', '--gui', action='store_true', help='Open GUI')

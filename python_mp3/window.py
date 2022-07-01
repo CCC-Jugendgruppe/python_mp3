@@ -33,6 +33,19 @@ dirs = conf.readfile()["dir"]
 mp3v = conf.readfile("mp3_version")
 settings = {}
 
+class WorkerThread(qtc.QObject):
+    signalRefreshTable = qtc.pyqtSignal(str, int)
+
+    def __init__(self):
+        super().__init__()
+
+    @qtc.pyqtSlot()
+    def run(self):
+        while True:
+            # Long running task ...
+            self.signalRefreshTable.emit("leet", 1337)
+            time.sleep(5)
+
 
 class Window(qtw.QWidget):
 	def __init__(self):
@@ -67,7 +80,13 @@ class Window(qtw.QWidget):
 		mainlayout.addLayout(self.bottomPanel())
 
 		self.setLayout(mainlayout)
-		self.show()
+		
+
+		self.__timer == qtc.QTimer()
+		self.__timer.timeout.connect(self.show)
+		self.__timer.start(1000)
+		#self.show()
+		
 
 	def outputFrame(self) -> qtw.QFrame:
 		# General Layout Settings
@@ -218,7 +237,7 @@ class Window(qtw.QWidget):
 
 		with open('config.json', "w") as f:
 			json.dump(data, f, ensure_ascii=False)
-
+		self.__refreshDb(tmp_db_path)
 	def exportDb(self):
 		# TODO use xdg file Portal
 		filename = qtw.QFileDialog.getSaveFileName(self, "Export Database", ".sql")[0]
