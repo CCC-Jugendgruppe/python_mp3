@@ -12,6 +12,7 @@
 import pathlib
 import sys
 import json
+import time
 
 import PyQt6.QtCore as qtc
 import PyQt6.QtGui as qtg
@@ -34,7 +35,7 @@ mp3v = conf.readfile("mp3_version")
 settings = {}
 
 class WorkerThread(qtc.QObject):
-    signalRefreshTable = qtc.pyqtSignal(str, int)
+    signalRefreshTable = qtc.pyqtSignal()
 
     def __init__(self):
         super().__init__()
@@ -43,14 +44,19 @@ class WorkerThread(qtc.QObject):
     def run(self):
         while True:
             # Long running task ...
-            self.signalRefreshTable.emit("leet", 1337)
+            self.signalRefreshTable.emit()
             time.sleep(5)
-
 
 class Window(qtw.QWidget):
 	def __init__(self):
 		super().__init__()
 		self.initui()
+		self.worker = WorkerThread()
+		self.workerThread = qtc.QThread()
+		self.workerThread.started.connect(self.worker.run)  # Init worker run() at startup (optional)
+		self.worker.signalRefreshTable.connect(self.initui)  # Connect your signals/slots
+		self.worker.moveToThread(self.workerThread)  # Move the Worker object to the Thread object
+
 
 	# self.config = Config(config_path)
 	# conf = self.config.readfile()
@@ -82,11 +88,13 @@ class Window(qtw.QWidget):
 		self.setLayout(mainlayout)
 		
 
+		"""
 		self.__timer == qtc.QTimer()
 		self.__timer.timeout.connect(self.show)
 		self.__timer.start(1000)
-		#self.show()
 		
+		"""
+		self.show()
 
 	def outputFrame(self) -> qtw.QFrame:
 		# General Layout Settings
@@ -162,14 +170,7 @@ class Window(qtw.QWidget):
 		songsdb.close_connection()
 		if len(songsdict) < 1:
 			return None
-		"""
-		songsdict = [
-			{"artist": "dew", "band": "we", "album": "dqw", "song": "title", "track": "21", "genre": "Breakbeat",
-			 "composer": "wer", "copyright": "wer", "comment": "\x00\x00\x00\x00ew", "year": 2012, "url": "\x00rwe"},
-			{"artist": "dew", "band": "we", "album": "dqw", "song": "deedwwe", "track": "21", "genre": "Breakbeat",
-			 "composer": "wer", "copyright": "wer", "comment": "\x00\x00\x00\x00ew", "year": 2012, "url": "\x00rwe"}
-		]
-		"""
+
 		#print(len(songsdict[0].keys))
 		testlist = [1, 2, 3, 4]
 		songstable = qtw.QTableWidget(len(songsdict), len(songsdict[0].keys()), self)
@@ -226,10 +227,10 @@ class Window(qtw.QWidget):
 
 	def importSongs(self):
 		# write opened file to dir array in json file and don't reload everything
-		print('asdf')
 		songs = qtw.QFileDialog.getOpenFileName(self, "Import Songs")
 		print(songs)
 
+		"""
 		with open('config.json', 'r+') as f:
 			data = json.load(f)
 			if type(songs) == tuple:
@@ -237,7 +238,12 @@ class Window(qtw.QWidget):
 
 		with open('config.json', "w") as f:
 			json.dump(data, f, ensure_ascii=False)
+		"""
+		if type(songs) == tuple:
+			conf.update(item="dirs", content=songs[0])
+
 		self.__refreshDb(tmp_db_path)
+
 	def exportDb(self):
 		# TODO use xdg file Portal
 		filename = qtw.QFileDialog.getSaveFileName(self, "Export Database", ".sql")[0]
@@ -252,12 +258,13 @@ class Window(qtw.QWidget):
 
 	def __refreshDb(self, path):
 		# print('Input:',tmp_input_path, 'Output:', tmp_db_path)
-		songsupdate(dirs, path, 2)
+		songsupdate(conf.readfile(item="dir"), path, 2)
 
 	def quit(self):
 		# TODO self.saveSettings()
 		# TODO Quit Dialog
 		qtw.QApplication.instance().quit()
+		self.workerThread.start()
 
 
 def createWindow():
