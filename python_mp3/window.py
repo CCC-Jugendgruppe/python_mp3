@@ -11,17 +11,16 @@
 
 import pathlib
 import sys
-import json
 import time
 
 import PyQt6.QtCore as qtc
 import PyQt6.QtGui as qtg
 import PyQt6.QtWidgets as qtw
 
+from python_mp3.config import Config
 # python_mp3.<file> needed for proper pip implementation
 from python_mp3.core import songsupdate
 from python_mp3.database import Database
-from python_mp3.config import Config
 
 # TODO get system cache and config path and put files in respective folder
 # Set path for temporary database to cache 
@@ -30,25 +29,31 @@ tmp_db_path = 'songs.sql'
 # read configurations
 config_path = './config.json'
 conf = Config(config_path)
-dirs = conf.readfile()["dir"]
-mp3v = conf.readfile("mp3_version")
+
+
+def get_dirs() -> str:
+	return conf.readfile(item="dir")
+
+
 settings = {}
 
+
 class WorkerThread(qtc.QObject):
-    signalRefreshTable = qtc.pyqtSignal()
+	signalRefreshTable = qtc.pyqtSignal()
 
-    def __init__(self):
-        super().__init__()
+	def __init__(self) -> None:
+		super().__init__()
 
-    @qtc.pyqtSlot()
-    def run(self):
-        while True:
-            # Long running task ...
-            self.signalRefreshTable.emit()
-            time.sleep(5)
+	@qtc.pyqtSlot()
+	def run(self) -> None:
+		while True:
+			# Long running task ...
+			self.signalRefreshTable.emit()
+			time.sleep(5)
+
 
 class Window(qtw.QWidget):
-	def __init__(self):
+	def __init__(self) -> None:
 		super().__init__()
 		self.initui()
 		self.worker = WorkerThread()
@@ -57,7 +62,6 @@ class Window(qtw.QWidget):
 		self.worker.signalRefreshTable.connect(self.initui)  # Connect your signals/slots
 		self.worker.moveToThread(self.workerThread)  # Move the Worker object to the Thread object
 
-
 	# self.config = Config(config_path)
 	# conf = self.config.readfile()
 	# self.dirs = conf["dir"]
@@ -65,7 +69,7 @@ class Window(qtw.QWidget):
 	# self.mp3v = self.config.readfile("mp3_version")
 	# self.settings = {}
 
-	def initui(self):
+	def initui(self) -> None:
 		# Global Settings
 		self.setGeometry(0, 0, 650, 500)
 		self.setWindowTitle('Python mp3')
@@ -86,7 +90,6 @@ class Window(qtw.QWidget):
 		mainlayout.addLayout(self.bottomPanel())
 
 		self.setLayout(mainlayout)
-		
 
 		"""
 		self.__timer == qtc.QTimer()
@@ -111,7 +114,7 @@ class Window(qtw.QWidget):
 		refreshbtn.resize(refreshbtn.sizeHint())
 		layout.addWidget(refreshbtn)
 
-		#self.__createSongsTable()
+		# self.__createSongsTable()
 		songstable = self.__createSongsTable()
 		layout.addWidget(songstable)
 
@@ -130,7 +133,7 @@ class Window(qtw.QWidget):
 		frame = self.__setupFrame(layout)
 		return frame
 
-	def bottomPanel(self):
+	def bottomPanel(self) -> qtw.QHBoxLayout:
 		layout = self.__setupLayout('h')
 
 		# Button to reset settings
@@ -171,7 +174,7 @@ class Window(qtw.QWidget):
 		if len(songsdict) < 1:
 			return None
 
-		#print(len(songsdict[0].keys))
+		# print(len(songsdict[0].keys))
 		testlist = [1, 2, 3, 4]
 		songstable = qtw.QTableWidget(len(songsdict), len(songsdict[0].keys()), self)
 		songstable.setHorizontalHeaderLabels(["id"] + songsdb.keys)
@@ -214,18 +217,18 @@ class Window(qtw.QWidget):
 		layout.setEnabled(True)
 		return layout
 
-	def __setupFrame(self, layout):
+	def __setupFrame(self, layout: str) -> qtw.QFrame:
 		frame = qtw.QFrame()
 		frame.setLayout(layout)
 		frame.setFrameShape(qtw.QFrame.Shape.StyledPanel)
 		return frame
 
-	def __titleLabel(self, name: str):
+	def __titleLabel(self, name: str) -> qtw.QLabel:
 		label = qtw.QLabel('<b>' + name + '<\b>', self)
 		label.setFont(qtg.QFont('Ubuntu', 15))
 		return label
 
-	def importSongs(self):
+	def importSongs(self) -> None:
 		# write opened file to dir array in json file and don't reload everything
 		songs = qtw.QFileDialog.getOpenFileName(self, "Import Songs")
 		print(songs)
@@ -256,18 +259,18 @@ class Window(qtw.QWidget):
 
 	# please evaluate the nessesarity
 
-	def __refreshDb(self, path):
+	def __refreshDb(self, path: str) -> None:
 		# print('Input:',tmp_input_path, 'Output:', tmp_db_path)
-		songsupdate(conf.readfile(item="dir"), path, 2)
+		songsupdate(get_dirs(), path, 2)
 
-	def quit(self):
+	def quit(self) -> None:
 		# TODO self.saveSettings()
 		# TODO Quit Dialog
 		qtw.QApplication.instance().quit()
 		self.workerThread.start()
 
 
-def createWindow():
+def createWindow() -> None:
 	app = qtw.QApplication(sys.argv)
 	app.setStyle('Fusion')
 	# TODO: Make color pallete
