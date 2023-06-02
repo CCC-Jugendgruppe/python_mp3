@@ -13,10 +13,10 @@ not working yet ```python-mp3```
 ``` git clone https://github.com/CCC-Jugendgruppe/python_mp3.git```
 ### 2. Go into the repo folder
 ``` cd python_mp3```
-### 3. install Programm with pip
+### 3.Iinstall program with pip
 ``` pip3 install .```
 ### FOR WORKING ON GUI: 4. Put Music files into the input folder
-### 5. Start the programm
+### 5. Start the program
 ```python-mp3```
 
 use ```python3 main.py -i /path``` 
